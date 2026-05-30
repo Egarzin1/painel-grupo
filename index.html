@@ -48,46 +48,40 @@ body {
 }
 
 .sidebar {
-    width: 72px;
+    width: 58px;
     height: 100%;
     background: rgba(10, 11, 14, 0.88);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 18px;
-    gap: 15px;
+    padding-top: 16px;
+    gap: 14px;
     flex-shrink: 0;
 }
 
 .nav-btn {
-    width: 46px;
-    height: 46px;
+    width: 38px;
+    height: 38px;
     border: none;
     outline: none;
-    border-radius: 13px;
+    border-radius: 11px;
     background: transparent;
     color: #777b83;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .nav-btn svg {
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 21px;
     fill: currentColor;
 }
 
 .nav-btn.active {
     color: #95a7ff;
     background: rgba(149, 167, 255, 0.08);
-}
-
-.nav-btn:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
 }
 
 .content {
@@ -101,7 +95,6 @@ body {
 .topbar {
     height: 45px;
     display: flex;
-    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 12px;
 }
@@ -110,7 +103,6 @@ body {
     font-size: 18px;
     font-weight: 600;
     color: #b7b7b7;
-    letter-spacing: 0.3px;
 }
 
 .title-line {
@@ -135,12 +127,6 @@ body {
     color: #a4a4a4;
     cursor: pointer;
     font-size: 18px;
-    flex-shrink: 0;
-}
-
-.close-btn:hover {
-    background: rgba(255, 65, 65, 0.18);
-    color: #fff;
 }
 
 .page {
@@ -215,7 +201,6 @@ body {
 .stat-card strong {
     font-size: 24px;
     color: #f1f1f1;
-    font-weight: 600;
 }
 
 .leave-btn {
@@ -229,9 +214,9 @@ body {
     cursor: pointer;
 }
 
-.leave-btn:hover {
-    background: rgba(255, 70, 70, 0.18);
-    color: #fff;
+.leave-btn.danger {
+    background: rgba(255, 65, 65, 0.13);
+    color: #ff9b9b;
 }
 
 .members-top {
@@ -266,16 +251,18 @@ body {
     height: calc(100% - 46px);
     overflow-y: auto;
     padding-right: 8px;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
 }
 
 .members-box::-webkit-scrollbar,
 .cash-history::-webkit-scrollbar {
-    width: 4px;
+    width: 5px;
 }
 
 .members-box::-webkit-scrollbar-thumb,
 .cash-history::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.18);
     border-radius: 20px;
 }
 
@@ -376,25 +363,14 @@ body {
     display: block;
 }
 
-.manage-btn:hover {
-    background: rgba(149,167,255,0.18);
-    color: #fff;
-}
-
 .empty {
     height: 100px;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     color: #777;
     font-size: 13px;
 }
-
-.empty.show {
-    display: flex;
-}
-
-/* CAIXA DA ORG */
 
 .cash-layout {
     height: 100%;
@@ -498,11 +474,6 @@ body {
     color: #d5d5d5;
 }
 
-.withdraw-btn:hover {
-    background: rgba(255, 85, 85, 0.18);
-    color: #fff;
-}
-
 .cash-permission {
     margin-top: 8px;
     color: #8d8d8d;
@@ -516,18 +487,24 @@ body {
     flex: 1;
     min-height: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .history-card h2 {
     font-size: 14px;
     color: #cfcfcf;
     margin-bottom: 10px;
+    flex-shrink: 0;
 }
 
 .cash-history {
-    height: calc(100% - 28px);
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
     padding-right: 8px;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
 }
 
 .history-row {
@@ -566,8 +543,6 @@ body {
     color: #ff8a8a;
 }
 
-/* MODAIS */
-
 .modal-bg {
     position: fixed;
     inset: 0;
@@ -576,6 +551,7 @@ body {
     align-items: center;
     justify-content: center;
     pointer-events: auto;
+    z-index: 9999;
 }
 
 .modal-bg.show {
@@ -646,7 +622,7 @@ body {
     color: #10131d;
 }
 
-.danger {
+.danger-btn {
     background: rgba(255, 65, 65, 0.18);
     color: #ff8e8e;
 }
@@ -696,141 +672,39 @@ body {
     font-size: 12px;
 }
 
-/* FIX MOBILE CEF */
-
-@media screen and (max-width: 1400px) {
-    .panel {
-        width: 78vw !important;
-        height: 78vh !important;
-        min-width: 0 !important;
-        max-width: none !important;
-        min-height: 0 !important;
-    }
-}
-
 @media screen and (max-width: 950px) {
     .panel {
-        width: 92vw !important;
-        height: 86vh !important;
+        width: 92vw;
+        height: 86vh;
         border-radius: 12px;
     }
 
     .sidebar {
-        width: 58px !important;
+        width: 50px;
         padding-top: 14px;
         gap: 12px;
     }
 
     .nav-btn {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
     }
 
     .nav-btn svg {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
     }
 
     .content {
-        padding: 14px 16px !important;
-    }
-
-    .topbar {
-        height: 38px;
-        margin-bottom: 10px;
+        padding: 14px 16px;
     }
 
     .title-area h1 {
         font-size: 15px;
     }
 
-    .group-tag {
-        font-size: 12px;
-    }
-
-    .title-line {
-        width: 130px;
-    }
-
-    .close-btn {
-        width: 30px;
-        height: 30px;
-    }
-
-    .home-header {
-        margin-bottom: 14px;
-    }
-
-    .group-icon {
-        width: 38px;
-        height: 38px;
-    }
-
-    .group-icon svg {
-        width: 26px;
-        height: 26px;
-    }
-
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        max-width: none;
-    }
-
-    .stat-card {
-        min-height: 70px;
-        padding: 13px;
-    }
-
-    .stat-card p {
-        font-size: 12px;
-        margin-bottom: 8px;
-    }
-
-    .stat-card strong {
-        font-size: 22px;
-    }
-
-    .leave-btn {
-        margin-top: 12px;
-        padding: 9px 13px;
-    }
-
-    .members-top {
-        margin-bottom: 10px;
-    }
-
-    .member-row {
-        height: 58px;
-        padding: 0 10px;
-    }
-
-    .avatar {
-        width: 34px;
-        height: 34px;
-    }
-
-    .member-info h3 {
-        font-size: 13px;
-    }
-
-    .member-info p {
-        font-size: 11px;
-    }
-
-    .status {
-        font-size: 11px;
-        margin-right: 6px;
-    }
-
-    .manage-btn {
-        padding: 7px 9px;
-        font-size: 11px;
-    }
-
     .cash-top {
         grid-template-columns: 1fr;
-        gap: 10px;
     }
 
     .cash-action-area {
@@ -840,16 +714,16 @@ body {
 
 @media screen and (max-width: 700px) {
     .panel {
-        width: 96vw !important;
-        height: 90vh !important;
+        width: 96vw;
+        height: 90vh;
     }
 
     .sidebar {
-        width: 52px !important;
+        width: 46px;
     }
 
     .content {
-        padding: 12px !important;
+        padding: 12px;
     }
 
     .cash-action-area {
@@ -898,7 +772,7 @@ body {
         <div class="content">
             <div class="topbar">
                 <div class="title-area">
-                    <h1 id="pageTitle">Página inicial - tropa do Arena</h1>
+                    <h1 id="pageTitle">Página inicial</h1>
                     <div class="title-line"></div>
                     <div class="group-tag" id="groupTag">Facção / Corporação</div>
                 </div>
@@ -915,8 +789,8 @@ body {
                     </div>
 
                     <div>
-                        <div class="group-name" id="homeGroupName">tropa do Arena</div>
-                        <div class="group-role">Seu cargo: <span id="myRoleText">Líder</span></div>
+                        <div class="group-name" id="homeGroupName">Nenhuma organização</div>
+                        <div class="group-role">Seu cargo: <span id="myRoleText">Membro</span></div>
                     </div>
                 </div>
 
@@ -932,7 +806,7 @@ body {
                     </div>
                 </div>
 
-                <button class="leave-btn" onclick="leaveGroup()">Sair do grupo</button>
+                <button class="leave-btn" id="leaveGroupBtn" onclick="leaveGroup()">Sair do grupo</button>
             </section>
 
             <section class="page" id="page-members">
@@ -942,12 +816,10 @@ body {
                 </div>
 
                 <div class="members-box" id="membersList"></div>
-                <div class="empty" id="membersEmpty">Nenhum membro encontrado.</div>
             </section>
 
             <section class="page" id="page-cash">
                 <div class="cash-layout">
-
                     <div class="cash-card">
                         <h2>Caixa da Org</h2>
 
@@ -970,9 +842,7 @@ body {
                                     </div>
                                 </div>
 
-                                <p class="cash-permission" id="cashPermissionText">
-                                    Líderes podem depositar e sacar. Membros podem apenas depositar.
-                                </p>
+                                <p class="cash-permission" id="cashPermissionText"></p>
                             </div>
                         </div>
                     </div>
@@ -981,7 +851,6 @@ body {
                         <h2>Histórico de Depósitos e Saques</h2>
                         <div class="cash-history" id="cashHistory"></div>
                     </div>
-
                 </div>
             </section>
 
@@ -1001,7 +870,7 @@ body {
         <h2>Adicionar membro</h2>
 
         <label>ID/Nome do jogador</label>
-        <input type="text" id="addPlayerInput" placeholder="Ex: arena #1 ou ID 24">
+        <input type="text" id="addPlayerInput" placeholder="Ex: 24 ou Nome_Sobrenome">
 
         <label>Cargo</label>
         <select id="addRoleInput">
@@ -1034,7 +903,7 @@ body {
         </select>
 
         <div class="modal-actions">
-            <button class="danger" onclick="removeSelectedMember()">Remover</button>
+            <button class="danger-btn" onclick="removeSelectedMember()">Remover</button>
             <button class="cancel" onclick="closeManageModal()">Cancelar</button>
             <button class="confirm" onclick="saveSelectedMember()">Salvar</button>
         </div>
@@ -1051,76 +920,45 @@ body {
 
 <script>
 let groupData = {
-    groupName: "tropa do Arena",
-    groupType: "Facção / Corporação",
+    groupName: "Tropa do Arena",
+    groupType: "Facção",
     myRole: "Líder",
-
     cashBalance: 15000,
-
-    cashHistory: [
-        {
-            type: "deposit",
-            player: "arena #1",
-            value: 5000,
-            date: "Hoje às 14:20"
-        },
-        {
-            type: "withdraw",
-            player: "arena #1",
-            value: 2000,
-            date: "Hoje às 15:10"
-        },
-        {
-            type: "deposit",
-            player: "Soldado_01",
-            value: 12000,
-            date: "Ontem às 22:43"
-        }
-    ],
-
     members: [
-        {
-            id: 1,
-            name: "arena #1",
-            role: "Líder",
-            online: true,
-            time: "2h"
-        },
-        {
-            id: 2,
-            name: "Membro_Test",
-            role: "Membro",
-            online: false,
-            time: "0h"
-        },
-        {
-            id: 3,
-            name: "Soldado_01",
-            role: "Membro",
-            online: true,
-            time: "1h"
-        }
+        { id: 0, name: "arena_01", role: "Líder", online: true, time: "2h" },
+        { id: 1, name: "soldado_01", role: "Sub-Líder", online: true, time: "1h" },
+        { id: 2, name: "membro_01", role: "Membro", online: false, time: "0h" }
     ],
-
+    cashHistory: [
+        { id: 0, type: "deposit", player: "arena_01", value: 5000, date: "Hoje às 14:20" },
+        { id: 1, type: "withdraw", player: "arena_01", value: 2000, date: "Hoje às 15:10" },
+        { id: 2, type: "deposit", player: "soldado_01", value: 12000, date: "Ontem às 22:43" },
+        { id: 3, type: "deposit", player: "membro_01", value: 4000, date: "Ontem às 20:10" },
+        { id: 4, type: "withdraw", player: "arena_01", value: 1000, date: "Ontem às 19:30" }
+    ],
     logs: [
-        "Você entrou no grupo com sucesso!",
-        "arena #1 entrou online.",
-        "Soldado_01 entrou online."
+        "Painel carregado com sucesso",
+        "arena_01 entrou online",
+        "soldado_01 entrou online"
     ]
 };
 
 let selectedMemberId = null;
 
-function isLeader() {
-    return groupData.myRole === "Líder" || groupData.myRole === "Sub-Líder";
+function isOwnerLeader() {
+    return groupData.myRole === "Líder";
 }
 
-function canViewMembers() {
-    return ["Membro", "Gerente", "Sub-Líder", "Líder"].includes(groupData.myRole);
+function isSubLeaderOrLeader() {
+    return groupData.myRole === "Líder" || groupData.myRole === "Sub-Líder";
 }
 
 function canManageMembers() {
-    return groupData.myRole === "Líder" || groupData.myRole === "Sub-Líder";
+    return isSubLeaderOrLeader();
+}
+
+function canUseCashWithdraw() {
+    return isSubLeaderOrLeader();
 }
 
 function formatMoney(value) {
@@ -1155,47 +993,45 @@ function renderAll() {
 function renderHome() {
     const onlineCount = groupData.members.filter(m => m.online).length;
     const totalCount = groupData.members.length;
+    const btn = document.getElementById("leaveGroupBtn");
 
     document.getElementById("homeGroupName").innerText = groupData.groupName;
     document.getElementById("groupTag").innerText = groupData.groupType;
     document.getElementById("myRoleText").innerText = groupData.myRole;
-
     document.getElementById("onlineMembers").innerText = onlineCount;
     document.getElementById("totalMembers").innerText = totalCount;
+
+    if (isOwnerLeader()) {
+        btn.innerText = "Desfazer grupo";
+        btn.classList.add("danger");
+    } else {
+        btn.innerText = "Sair do grupo";
+        btn.classList.remove("danger");
+    }
 }
 
 function renderMembers() {
     const list = document.getElementById("membersList");
-    const empty = document.getElementById("membersEmpty");
     const addBtn = document.getElementById("addMemberBtn");
 
     list.innerHTML = "";
 
-    if (isLeader()) {
+    if (canManageMembers()) {
         addBtn.classList.add("show");
     } else {
         addBtn.classList.remove("show");
     }
 
-    if (!canViewMembers()) {
-        empty.innerText = "Você não tem permissão para ver membros.";
-        empty.classList.add("show");
-        return;
-    }
-
     if (!groupData.members || groupData.members.length === 0) {
-        empty.innerText = "Nenhum membro encontrado.";
-        empty.classList.add("show");
+        list.innerHTML = `<div class="empty">Nenhum membro encontrado.</div>`;
         return;
     }
-
-    empty.classList.remove("show");
 
     groupData.members.forEach(member => {
         const row = document.createElement("div");
         row.className = "member-row";
 
-        const firstLetter = member.name.charAt(0).toUpperCase();
+        const firstLetter = member.name ? member.name.charAt(0).toUpperCase() : "?";
 
         row.innerHTML = `
             <div class="member-left">
@@ -1232,7 +1068,7 @@ function renderCash() {
     balance.innerText = formatMoney(groupData.cashBalance);
     history.innerHTML = "";
 
-    if (isLeader()) {
+    if (canUseCashWithdraw()) {
         withdrawBtn.style.display = "block";
         cashButtons.classList.remove("member-only");
         permissionText.innerText = "Seu cargo permite depositar e sacar dinheiro do caixa.";
@@ -1243,11 +1079,7 @@ function renderCash() {
     }
 
     if (!groupData.cashHistory || groupData.cashHistory.length === 0) {
-        history.innerHTML = `
-            <div class="empty show">
-                Nenhuma movimentação no caixa.
-            </div>
-        `;
+        history.innerHTML = `<div class="empty">Nenhuma movimentação no caixa.</div>`;
         return;
     }
 
@@ -1277,6 +1109,11 @@ function renderCash() {
 function renderLogs() {
     const list = document.getElementById("logsList");
     list.innerHTML = "";
+
+    if (!groupData.logs || groupData.logs.length === 0) {
+        list.innerHTML = `<div class="empty">Nenhum log encontrado.</div>`;
+        return;
+    }
 
     groupData.logs.forEach(log => {
         const row = document.createElement("div");
@@ -1309,30 +1146,17 @@ function depositCash() {
         value: value
     });
 
-    groupData.cashBalance += value;
-
-    groupData.cashHistory.unshift({
-        type: "deposit",
-        player: "Você",
-        value: value,
-        date: "Agora"
-    });
-
-    groupData.logs.unshift("Você depositou " + formatMoney(value) + " no caixa da org.");
-
     input.value = "";
-    renderAll();
-    showToast("Sucesso", "Depósito feito com sucesso.");
 }
 
 function withdrawCash() {
-    if (!isLeader()) {
-        showToast("Erro", "Apenas líder pode sacar.");
-        return;
-    }
-
     const input = document.getElementById("cashValue");
     const value = Number(input.value);
+
+    if (!canUseCashWithdraw()) {
+        showToast("Erro", "Apenas líder ou sub-líder pode sacar.");
+        return;
+    }
 
     if (!value || value <= 0) {
         showToast("Erro", "Digite um valor válido.");
@@ -1348,24 +1172,11 @@ function withdrawCash() {
         value: value
     });
 
-    groupData.cashBalance -= value;
-
-    groupData.cashHistory.unshift({
-        type: "withdraw",
-        player: "Você",
-        value: value,
-        date: "Agora"
-    });
-
-    groupData.logs.unshift("Você sacou " + formatMoney(value) + " do caixa da org.");
-
     input.value = "";
-    renderAll();
-    showToast("Sucesso", "Saque feito com sucesso.");
 }
 
 function openAddModal() {
-    if (!isLeader()) {
+    if (!canManageMembers()) {
         showToast("Erro", "Você não tem permissão para adicionar membros.");
         return;
     }
@@ -1383,7 +1194,7 @@ function confirmAddMember() {
     const player = document.getElementById("addPlayerInput").value.trim();
     const role = document.getElementById("addRoleInput").value;
 
-    if (player.length < 2) {
+    if (player.length < 1) {
         showToast("Erro", "Digite o nome ou ID do jogador.");
         return;
     }
@@ -1393,19 +1204,7 @@ function confirmAddMember() {
         role: role
     });
 
-    groupData.members.push({
-        id: Date.now(),
-        name: player,
-        role: role,
-        online: false,
-        time: "0h"
-    });
-
-    groupData.logs.unshift("Membro " + player + " foi adicionado como " + role + ".");
-
     closeAddModal();
-    renderAll();
-    showToast("Sucesso", "Membro adicionado com sucesso.");
 }
 
 function openManageModal(memberId) {
@@ -1414,7 +1213,7 @@ function openManageModal(memberId) {
         return;
     }
 
-    const member = groupData.members.find(m => m.id === memberId);
+    const member = groupData.members.find(m => Number(m.id) === Number(memberId));
     if (!member) return;
 
     selectedMemberId = memberId;
@@ -1432,11 +1231,10 @@ function closeManageModal() {
 function saveSelectedMember() {
     if (selectedMemberId === null) return;
 
-    const member = groupData.members.find(m => m.id === selectedMemberId);
+    const member = groupData.members.find(m => Number(m.id) === Number(selectedMemberId));
     if (!member) return;
 
     const newRole = document.getElementById("manageRole").value;
-    member.role = newRole;
 
     sendToPawn("manage_member", {
         id: member.id,
@@ -1444,17 +1242,13 @@ function saveSelectedMember() {
         role: newRole
     });
 
-    groupData.logs.unshift("Cargo de " + member.name + " alterado para " + newRole + ".");
-
     closeManageModal();
-    renderAll();
-    showToast("Sucesso", "Cargo alterado com sucesso.");
 }
 
 function removeSelectedMember() {
     if (selectedMemberId === null) return;
 
-    const member = groupData.members.find(m => m.id === selectedMemberId);
+    const member = groupData.members.find(m => Number(m.id) === Number(selectedMemberId));
     if (!member) return;
 
     sendToPawn("remove_member", {
@@ -1462,17 +1256,17 @@ function removeSelectedMember() {
         name: member.name
     });
 
-    groupData.members = groupData.members.filter(m => m.id !== selectedMemberId);
-    groupData.logs.unshift("Membro " + member.name + " foi removido do grupo.");
-
     closeManageModal();
-    renderAll();
-    showToast("Sucesso", "Membro removido com sucesso.");
 }
 
 function leaveGroup() {
-    sendToPawn("leave_group", {});
-    showToast("Sucesso", "Você saiu do grupo.");
+    if (isOwnerLeader()) {
+        sendToPawn("delete_group", {});
+        showToast("Sucesso", "Solicitação para desfazer grupo enviada.");
+    } else {
+        sendToPawn("leave_group", {});
+        showToast("Sucesso", "Solicitação para sair do grupo enviada.");
+    }
 }
 
 function closePanel() {
@@ -1500,7 +1294,7 @@ function showToast(title, msg) {
 function sendToPawn(action, data) {
     const payload = JSON.stringify({
         action: action,
-        data: data
+        data: data || {}
     });
 
     console.log("[CEF->PAWN]", payload);
@@ -1512,7 +1306,17 @@ function sendToPawn(action, data) {
     if (window.Android && typeof window.Android.onGroupPanel === "function") {
         window.Android.onGroupPanel(payload);
     }
+
+    if (window.sampCEF && typeof window.sampCEF.send === "function") {
+        window.sampCEF.send("group_panel", payload);
+    }
 }
+
+/*
+    Pawn envia assim:
+
+    Cef_EvalJS(playerid, CEF_ORG, "loadGroupData({\"groupName\":\"Tropa\",\"groupType\":\"Facção\",\"myRole\":\"Líder\",\"cashBalance\":5000,\"members\":[],\"cashHistory\":[],\"logs\":[]});");
+*/
 
 function loadGroupData(json) {
     try {
@@ -1521,9 +1325,9 @@ function loadGroupData(json) {
         groupData = {
             ...groupData,
             ...data,
-            members: data.members || groupData.members,
-            logs: data.logs || groupData.logs,
-            cashHistory: data.cashHistory || groupData.cashHistory
+            members: data.members || [],
+            cashHistory: data.cashHistory || [],
+            logs: data.logs || []
         };
 
         renderAll();
@@ -1534,8 +1338,13 @@ function loadGroupData(json) {
     }
 }
 
+function updateCashBalance(value) {
+    groupData.cashBalance = Number(value) || 0;
+    renderAll();
+}
+
 function updateMemberStatus(memberId, online) {
-    const member = groupData.members.find(m => m.id === memberId);
+    const member = groupData.members.find(m => Number(m.id) === Number(memberId));
     if (!member) return;
 
     member.online = online;
@@ -1547,24 +1356,7 @@ function setMyRole(role) {
     renderAll();
 }
 
-function updateCashBalance(value) {
-    groupData.cashBalance = Number(value) || 0;
-    renderAll();
-}
-
-function addCashHistory(type, player, value, date) {
-    groupData.cashHistory.unshift({
-        type: type,
-        player: player,
-        value: Number(value) || 0,
-        date: date || "Agora"
-    });
-
-    renderAll();
-}
-
 renderAll();
-showToast("Sucesso", "Você entrou no grupo com sucesso!");
 </script>
 
 </body>
