@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Painel de Grupo</title>
+<title>Painel Grupo</title>
 
 <style>
 * {
@@ -12,126 +12,97 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: transparent;
-    color: #d6d6d6;
+    background: rgba(0, 0, 0, 0.35);
+    color: white;
 }
 
-.cef-wrapper {
-    position: fixed;
-    inset: 0;
+.app {
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
-}
-
-.panel {
-    width: 78vw;
-    height: 78vh;
-    min-width: 0;
-    max-width: none;
-    min-height: 0;
-    background: rgba(13, 14, 17, 0.96);
-    border-radius: 16px;
-    display: flex;
-    overflow: hidden;
-    pointer-events: auto;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+    padding: 16px;
+    gap: 12px;
 }
 
 .sidebar {
-    width: 58px;
+    width: 62px;
     height: 100%;
-    background: rgba(10, 11, 14, 0.88);
+    background: #111827;
+    border-radius: 18px;
+    padding: 10px 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 16px;
-    gap: 14px;
-    flex-shrink: 0;
+    gap: 10px;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    background: #7c3aed;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
 }
 
 .nav-btn {
-    width: 38px;
-    height: 38px;
-    border: none;
-    outline: none;
-    border-radius: 11px;
-    background: transparent;
-    color: #777b83;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 14px;
+    background: #1f2937;
+    color: white;
+    font-size: 18px;
     cursor: pointer;
 }
 
-.nav-btn svg {
-    width: 21px;
-    height: 21px;
-    fill: currentColor;
-}
-
 .nav-btn.active {
-    color: #95a7ff;
-    background: rgba(149, 167, 255, 0.08);
+    background: #7c3aed;
 }
 
 .content {
     flex: 1;
-    min-width: 0;
-    padding: 18px 24px;
-    position: relative;
+    height: 100%;
+    background: #0f172a;
+    border-radius: 22px;
+    padding: 18px;
     overflow: hidden;
 }
 
-.topbar {
-    height: 45px;
+.header {
+    height: 70px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
 }
 
-.title-area h1 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #b7b7b7;
+.group-title h1 {
+    font-size: 28px;
 }
 
-.title-line {
-    width: 165px;
-    height: 2px;
-    background: rgba(255,255,255,0.07);
-    margin-top: 7px;
+.group-title span {
+    font-size: 14px;
+    color: #94a3b8;
 }
 
-.group-tag {
-    color: #7e7e7e;
-    font-size: 13px;
-    margin-top: 3px;
-}
-
-.close-btn {
-    width: 32px;
-    height: 32px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.04);
-    color: #a4a4a4;
-    cursor: pointer;
-    font-size: 18px;
+.role-badge {
+    background: #7c3aed;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: bold;
 }
 
 .page {
     display: none;
-    height: calc(100% - 57px);
+    height: calc(100% - 70px);
     overflow: hidden;
 }
 
@@ -139,599 +110,235 @@ body {
     display: block;
 }
 
-.home-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
-}
-
-.group-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.03);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #4d5260;
-    flex-shrink: 0;
-}
-
-.group-icon svg {
-    width: 29px;
-    height: 29px;
-    fill: currentColor;
-}
-
-.group-name {
-    font-size: 15px;
-    color: #c9c9c9;
-    font-weight: 600;
-}
-
-.group-role {
-    margin-top: 3px;
-    font-size: 12px;
-    color: #8c8c8c;
-}
-
-.stats-grid {
+.cards {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    width: 100%;
-    max-width: 520px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 10px;
 }
 
-.stat-card {
-    min-height: 82px;
-    padding: 15px;
-    background: rgba(255,255,255,0.032);
-    border-radius: 5px;
+.card {
+    background: #1e293b;
+    border-radius: 18px;
+    padding: 18px;
 }
 
-.stat-card p {
-    font-size: 13px;
-    color: #8f8f8f;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.stat-card strong {
-    font-size: 24px;
-    color: #f1f1f1;
-}
-
-.leave-btn {
-    margin-top: 16px;
-    border: none;
-    background: rgba(255,255,255,0.035);
-    color: #999;
-    font-size: 12px;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.leave-btn.danger {
-    background: rgba(255, 65, 65, 0.13);
-    color: #ff9b9b;
-}
-
-.members-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-}
-
-.members-top h2 {
+.card h3 {
+    color: #94a3b8;
     font-size: 15px;
-    color: #bdbdbd;
+    margin-bottom: 8px;
 }
 
-.add-btn {
-    display: none;
-    border: none;
-    background: #8ea0ff;
-    color: #0d0f16;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 9px 13px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.add-btn.show {
-    display: block;
+.card strong {
+    font-size: 28px;
 }
 
 .members-box {
-    height: calc(100% - 46px);
+    margin-top: 10px;
+    height: calc(100% - 10px);
     overflow-y: auto;
-    padding-right: 8px;
-    touch-action: pan-y;
-    -webkit-overflow-scrolling: touch;
+    padding-right: 6px;
 }
 
-.members-box::-webkit-scrollbar,
-.cash-history::-webkit-scrollbar {
-    width: 5px;
-}
-
-.members-box::-webkit-scrollbar-thumb,
-.cash-history::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.18);
-    border-radius: 20px;
-}
-
-.member-row {
-    height: 60px;
-    background: rgba(255,255,255,0.032);
-    border-radius: 5px;
-    margin-bottom: 8px;
-    padding: 0 12px;
-    display: flex;
+.member-item {
+    width: 100%;
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 14px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 44px 1fr auto auto;
+    gap: 12px;
     align-items: center;
-    justify-content: space-between;
-}
-
-.member-left {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    min-width: 0;
 }
 
 .avatar {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #1f2230, #3a3f59);
+    width: 44px;
+    height: 44px;
+    background: #334155;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #cfd6ff;
-    font-size: 13px;
+}
+
+.member-name {
     font-weight: bold;
-    flex-shrink: 0;
 }
 
-.member-info {
-    min-width: 0;
-}
-
-.member-info h3 {
-    color: #e0e0e0;
+.member-role {
+    color: #94a3b8;
     font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.member-info p {
-    margin-top: 4px;
-    color: #858585;
-    font-size: 11px;
 }
 
 .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    margin-right: 8px;
-    color: #8a8a8a;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
-.dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #777;
+.online {
+    background: #14532d;
+    color: #86efac;
 }
 
-.status.online {
-    color: #72e889;
+.offline {
+    background: #3f1d1d;
+    color: #fca5a5;
 }
 
-.status.online .dot {
-    background: #72e889;
-    box-shadow: 0 0 8px rgba(114, 232, 137, 0.6);
-}
-
-.member-right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-.manage-btn {
-    display: none;
-    border: none;
-    background: rgba(255,255,255,0.06);
-    color: #c6c6c6;
-    padding: 7px 10px;
-    border-radius: 5px;
+.action-btn {
+    border: 0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    background: #7c3aed;
+    color: white;
     cursor: pointer;
-    font-size: 11px;
+    font-weight: bold;
 }
 
-.manage-btn.show {
-    display: block;
-}
-
-.empty {
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #777;
-    font-size: 13px;
+.danger {
+    background: #dc2626;
 }
 
 .cash-layout {
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow: hidden;
-}
-
-.cash-card {
-    background: rgba(255,255,255,0.032);
-    border-radius: 5px;
-    padding: 12px;
-    width: 100%;
-    flex-shrink: 0;
-}
-
-.cash-card h2 {
-    font-size: 14px;
-    color: #cfcfcf;
-    margin-bottom: 10px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 12px;
 }
 
 .cash-top {
     display: grid;
-    grid-template-columns: 230px 1fr;
-    gap: 12px;
-    align-items: end;
-}
-
-.cash-balance {
-    background: rgba(0,0,0,0.22);
-    border-radius: 5px;
-    padding: 12px;
-}
-
-.cash-balance span {
-    display: block;
-    color: #858585;
-    font-size: 12px;
-    margin-bottom: 7px;
-}
-
-.cash-balance strong {
-    color: #8ea0ff;
-    font-size: 22px;
-}
-
-.cash-action-area {
-    display: grid;
-    grid-template-columns: 1fr 180px;
-    gap: 8px;
-    align-items: end;
-}
-
-.cash-input-box label {
-    display: block;
-    color: #858585;
-    font-size: 12px;
-    margin-bottom: 6px;
-}
-
-.cash-input-box input {
-    width: 100%;
-    height: 36px;
-    background: rgba(0,0,0,0.22);
-    border: 1px solid rgba(255,255,255,0.05);
-    color: #e6e6e6;
-    outline: none;
-    border-radius: 4px;
-    padding: 0 10px;
-}
-
-.cash-buttons {
-    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 12px;
 }
 
-.cash-buttons.member-only {
-    grid-template-columns: 1fr;
+.cash-actions {
+    background: #1e293b;
+    border-radius: 18px;
+    padding: 18px;
 }
 
-.deposit-btn,
-.withdraw-btn {
-    height: 36px;
-    border: none;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
+.cash-actions input {
+    width: 100%;
+    height: 44px;
+    border: 0;
+    outline: 0;
+    border-radius: 12px;
+    padding: 0 14px;
+    background: #0f172a;
+    color: white;
+    margin-top: 10px;
 }
 
-.deposit-btn {
-    background: #8ea0ff;
-    color: #10131d;
-}
-
-.withdraw-btn {
-    background: rgba(255,255,255,0.07);
-    color: #d5d5d5;
-}
-
-.cash-permission {
-    margin-top: 8px;
-    color: #8d8d8d;
-    font-size: 11px;
-}
-
-.history-card {
-    background: rgba(255,255,255,0.032);
-    border-radius: 5px;
-    padding: 12px;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.history-card h2 {
-    font-size: 14px;
-    color: #cfcfcf;
-    margin-bottom: 10px;
-    flex-shrink: 0;
+.cash-actions button {
+    margin-top: 10px;
+    width: 100%;
+    height: 42px;
 }
 
 .cash-history {
-    flex: 1;
-    min-height: 0;
+    background: #1e293b;
+    border-radius: 18px;
+    padding: 14px;
     overflow-y: auto;
-    padding-right: 8px;
-    touch-action: pan-y;
-    -webkit-overflow-scrolling: touch;
+    min-height: 0;
 }
 
-.history-row {
-    min-height: 52px;
-    background: rgba(0,0,0,0.18);
-    border-radius: 5px;
+.history-item {
+    background: #0f172a;
+    border-radius: 14px;
+    padding: 12px;
     margin-bottom: 8px;
-    padding: 8px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
-.history-left h3 {
-    color: #dedede;
-    font-size: 12px;
+.history-item strong {
+    display: block;
     margin-bottom: 4px;
 }
 
-.history-left p {
-    color: #838383;
-    font-size: 11px;
+.logs-box {
+    height: 100%;
+    background: #1e293b;
+    border-radius: 18px;
+    padding: 14px;
+    overflow-y: auto;
 }
 
-.history-value {
-    font-size: 12px;
-    font-weight: 700;
-    flex-shrink: 0;
+.log-item {
+    background: #0f172a;
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 8px;
+    color: #cbd5e1;
 }
 
-.history-value.deposit {
-    color: #72e889;
-}
-
-.history-value.withdraw {
-    color: #ff8a8a;
-}
-
-.modal-bg {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    pointer-events: auto;
-    z-index: 9999;
-}
-
-.modal-bg.show {
+.footer-actions {
+    margin-top: 14px;
     display: flex;
+    gap: 10px;
 }
 
-.modal {
-    width: 340px;
-    background: #111216;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+.footer-actions button {
+    flex: 1;
+    height: 46px;
 }
 
-.modal h2 {
-    font-size: 15px;
-    color: #fff;
-    margin-bottom: 12px;
+::-webkit-scrollbar {
+    width: 5px;
 }
 
-.modal label {
-    font-size: 12px;
-    color: #838383;
-    margin-bottom: 6px;
-    display: block;
+::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 20px;
 }
 
-.modal input,
-.modal select {
-    width: 100%;
-    height: 36px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.06);
-    outline: none;
-    color: #e9e9e9;
-    border-radius: 5px;
-    padding: 0 10px;
-    margin-bottom: 10px;
-}
-
-.modal select option {
-    background: #111216;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 8px;
-}
-
-.modal-actions button {
-    border: none;
-    border-radius: 5px;
-    padding: 9px 13px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.cancel {
-    background: rgba(255,255,255,0.06);
-    color: #bdbdbd;
-}
-
-.confirm {
-    background: #8ea0ff;
-    color: #10131d;
-}
-
-.danger-btn {
-    background: rgba(255, 65, 65, 0.18);
-    color: #ff8e8e;
-}
-
-.toast {
-    position: fixed;
-    left: 12px;
-    bottom: 18px;
-    width: 285px;
-    min-height: 62px;
-    background: rgba(20, 22, 27, 0.95);
-    border-radius: 4px;
-    overflow: hidden;
-    display: none;
-    align-items: stretch;
-    pointer-events: none;
-    z-index: 99999;
-}
-
-.toast.show {
-    display: flex;
-}
-
-.toast-icon {
-    width: 52px;
-    background: #8cff4f;
-    color: #172010;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.toast-text {
-    padding: 11px;
-}
-
-.toast-text h3 {
-    color: #9bff77;
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-
-.toast-text p {
-    color: #d4d4d4;
-    font-size: 12px;
-}
-
-@media screen and (max-width: 950px) {
-    .panel {
-        width: 92vw;
-        height: 86vh;
-        border-radius: 12px;
+@media (max-width: 900px) {
+    .app {
+        padding: 8px;
+        gap: 8px;
     }
 
     .sidebar {
-        width: 50px;
-        padding-top: 14px;
-        gap: 12px;
+        width: 54px;
+        border-radius: 16px;
     }
 
     .nav-btn {
-        width: 36px;
-        height: 36px;
-    }
-
-    .nav-btn svg {
-        width: 20px;
-        height: 20px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
 
     .content {
-        padding: 14px 16px;
+        padding: 12px;
+        border-radius: 18px;
     }
 
-    .title-area h1 {
-        font-size: 15px;
+    .header {
+        height: 58px;
+    }
+
+    .group-title h1 {
+        font-size: 20px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
     }
 
     .cash-top {
         grid-template-columns: 1fr;
     }
 
-    .cash-action-area {
-        grid-template-columns: 1fr 170px;
-    }
-}
-
-@media screen and (max-width: 700px) {
-    .panel {
-        width: 96vw;
-        height: 90vh;
+    .member-item {
+        grid-template-columns: 38px 1fr auto;
     }
 
-    .sidebar {
-        width: 46px;
-    }
-
-    .content {
-        padding: 12px;
-    }
-
-    .cash-action-area {
-        grid-template-columns: 1fr;
-    }
-
-    .status {
-        display: none;
+    .member-item .action-btn {
+        grid-column: 1 / 4;
     }
 }
 </style>
@@ -739,624 +346,275 @@ body {
 
 <body>
 
-<div class="cef-wrapper" id="cefWrapper">
-    <div class="panel">
+<div class="app">
+    <div class="sidebar">
+        <div class="logo">ORG</div>
+        <button class="nav-btn active" onclick="openPage('home', this)">🏠</button>
+        <button class="nav-btn" onclick="openPage('members', this)">👥</button>
+        <button class="nav-btn" onclick="openPage('cash', this)">💰</button>
+        <button class="nav-btn" onclick="openPage('logs', this)">📜</button>
+    </div>
 
-        <div class="sidebar">
-            <button class="nav-btn active" onclick="openPage('home', this)">
-                <svg viewBox="0 0 24 24">
-                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                </svg>
-            </button>
-
-            <button class="nav-btn" onclick="openPage('members', this)">
-                <svg viewBox="0 0 24 24">
-                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-                </svg>
-            </button>
-
-            <button class="nav-btn" onclick="openPage('cash', this)">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 2 3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4zm0 2.2L19 7.3V12c0 4.2-2.7 8.1-7 9.5-4.3-1.4-7-5.3-7-9.5V7.3l7-3.1z"/>
-                    <path d="M13 7h-2v2.1c-1.7.3-3 1.3-3 2.9 0 1.8 1.5 2.5 3.5 3 1.4.4 1.7.7 1.7 1.3 0 .6-.5 1-1.5 1-1.1 0-2.2-.4-3-1.1l-.9 1.8c.8.7 1.9 1.1 3.2 1.3V21h2v-1.8c1.8-.3 3.2-1.3 3.2-3.1 0-1.7-1.1-2.6-3.5-3.2-1.5-.4-1.9-.7-1.9-1.2 0-.5.4-.9 1.4-.9.9 0 1.8.3 2.5.8l.9-1.7c-.6-.5-1.5-.8-2.6-1V7z"/>
-                </svg>
-            </button>
-
-            <button class="nav-btn" onclick="openPage('logs', this)">
-                <svg viewBox="0 0 24 24">
-                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 14H7v-2h10v2zm0-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                </svg>
-            </button>
+    <div class="content">
+        <div class="header">
+            <div class="group-title">
+                <h1 id="groupName">Carregando...</h1>
+                <span id="groupType">Organização</span>
+            </div>
+            <div class="role-badge" id="myRole">Membro</div>
         </div>
 
-        <div class="content">
-            <div class="topbar">
-                <div class="title-area">
-                    <h1 id="pageTitle">Página inicial</h1>
-                    <div class="title-line"></div>
-                    <div class="group-tag" id="groupTag">Facção / Corporação</div>
+        <div id="home" class="page active">
+            <div class="cards">
+                <div class="card">
+                    <h3>Membros</h3>
+                    <strong id="totalMembers">0</strong>
                 </div>
 
-                <button class="close-btn" onclick="closePanel()">×</button>
+                <div class="card">
+                    <h3>Online</h3>
+                    <strong id="onlineMembers">0</strong>
+                </div>
+
+                <div class="card">
+                    <h3>Caixa da Org</h3>
+                    <strong id="cashBalance">R$ 0</strong>
+                </div>
             </div>
 
-            <section class="page active" id="page-home">
-                <div class="home-header">
-                    <div class="group-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3zm0 2.18L18 6.4V11c0 4.4-2.82 8.54-6 9.8-3.18-1.26-6-5.4-6-9.8V6.4l6-2.22z"/>
-                        </svg>
-                    </div>
-
-                    <div>
-                        <div class="group-name" id="homeGroupName">Nenhuma organização</div>
-                        <div class="group-role">Seu cargo: <span id="myRoleText">Membro</span></div>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <p>Membros Online</p>
-                        <strong id="onlineMembers">0</strong>
-                    </div>
-
-                    <div class="stat-card">
-                        <p>Membros Totais</p>
-                        <strong id="totalMembers">0</strong>
-                    </div>
-                </div>
-
-                <button class="leave-btn" id="leaveGroupBtn" onclick="leaveGroup()">Sair do grupo</button>
-            </section>
-
-            <section class="page" id="page-members">
-                <div class="members-top">
-                    <h2>Membros do grupo</h2>
-                    <button class="add-btn" id="addMemberBtn" onclick="openAddModal()">Adicionar membro</button>
-                </div>
-
-                <div class="members-box" id="membersList"></div>
-            </section>
-
-            <section class="page" id="page-cash">
-                <div class="cash-layout">
-                    <div class="cash-card">
-                        <h2>Caixa da Org</h2>
-
-                        <div class="cash-top">
-                            <div class="cash-balance">
-                                <span>Saldo disponível</span>
-                                <strong id="cashBalance">R$ 0</strong>
-                            </div>
-
-                            <div>
-                                <div class="cash-action-area">
-                                    <div class="cash-input-box">
-                                        <label>Valor</label>
-                                        <input type="number" id="cashValue" placeholder="Digite o valor">
-                                    </div>
-
-                                    <div class="cash-buttons" id="cashButtons">
-                                        <button class="deposit-btn" onclick="depositCash()">Depositar</button>
-                                        <button class="withdraw-btn" id="withdrawBtn" onclick="withdrawCash()">Sacar</button>
-                                    </div>
-                                </div>
-
-                                <p class="cash-permission" id="cashPermissionText"></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="history-card">
-                        <h2>Histórico de Depósitos e Saques</h2>
-                        <div class="cash-history" id="cashHistory"></div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="page" id="page-logs">
-                <div class="members-top">
-                    <h2>Últimas ações</h2>
-                </div>
-
-                <div class="members-box" id="logsList"></div>
-            </section>
+            <div class="footer-actions">
+                <button id="leaveBtn" class="action-btn danger" onclick="leaveOrDelete()">Sair do grupo</button>
+                <button class="action-btn" onclick="closePanel()">Fechar Painel</button>
+            </div>
         </div>
-    </div>
-</div>
 
-<div class="modal-bg" id="addModal">
-    <div class="modal">
-        <h2>Adicionar membro</h2>
-
-        <label>ID/Nome do jogador</label>
-        <input type="text" id="addPlayerInput" placeholder="Ex: 24 ou Nome_Sobrenome">
-
-        <label>Cargo</label>
-        <select id="addRoleInput">
-            <option value="Membro">Membro</option>
-            <option value="Gerente">Gerente</option>
-            <option value="Sub-Líder">Sub-Líder</option>
-            <option value="Líder">Líder</option>
-        </select>
-
-        <div class="modal-actions">
-            <button class="cancel" onclick="closeAddModal()">Cancelar</button>
-            <button class="confirm" onclick="confirmAddMember()">Adicionar</button>
+        <div id="members" class="page">
+            <div class="members-box" id="membersList"></div>
         </div>
-    </div>
-</div>
 
-<div class="modal-bg" id="manageModal">
-    <div class="modal">
-        <h2>Gerenciar membro</h2>
+        <div id="cash" class="page">
+            <div class="cash-layout">
+                <div class="cash-top">
+                    <div class="cash-actions">
+                        <h3>Depositar no caixa</h3>
+                        <input id="depositValue" type="number" placeholder="Valor">
+                        <button class="action-btn" onclick="depositCash()">Depositar</button>
+                    </div>
 
-        <label>Jogador</label>
-        <input type="text" id="manageName" disabled>
+                    <div class="cash-actions" id="withdrawBox">
+                        <h3>Sacar do caixa</h3>
+                        <input id="withdrawValue" type="number" placeholder="Valor">
+                        <button class="action-btn danger" onclick="withdrawCash()">Sacar</button>
+                    </div>
+                </div>
 
-        <label>Cargo</label>
-        <select id="manageRole">
-            <option value="Membro">Membro</option>
-            <option value="Gerente">Gerente</option>
-            <option value="Sub-Líder">Sub-Líder</option>
-            <option value="Líder">Líder</option>
-        </select>
-
-        <div class="modal-actions">
-            <button class="danger-btn" onclick="removeSelectedMember()">Remover</button>
-            <button class="cancel" onclick="closeManageModal()">Cancelar</button>
-            <button class="confirm" onclick="saveSelectedMember()">Salvar</button>
+                <div class="cash-history" id="cashHistory"></div>
+            </div>
         </div>
-    </div>
-</div>
 
-<div class="toast" id="toast">
-    <div class="toast-icon">✓</div>
-    <div class="toast-text">
-        <h3 id="toastTitle">Sucesso</h3>
-        <p id="toastMsg">Ação realizada com sucesso.</p>
+        <div id="logs" class="page">
+            <div class="logs-box" id="logsList"></div>
+        </div>
     </div>
 </div>
 
 <script>
 let groupData = {
-    groupName: "Tropa do Arena",
-    groupType: "Facção",
-    myRole: "Líder",
-    cashBalance: 15000,
-    members: [
-        { id: 0, name: "arena_01", role: "Líder", online: true, time: "2h" },
-        { id: 1, name: "soldado_01", role: "Sub-Líder", online: true, time: "1h" },
-        { id: 2, name: "membro_01", role: "Membro", online: false, time: "0h" }
-    ],
-    cashHistory: [
-        { id: 0, type: "deposit", player: "arena_01", value: 5000, date: "Hoje às 14:20" },
-        { id: 1, type: "withdraw", player: "arena_01", value: 2000, date: "Hoje às 15:10" },
-        { id: 2, type: "deposit", player: "soldado_01", value: 12000, date: "Ontem às 22:43" },
-        { id: 3, type: "deposit", player: "membro_01", value: 4000, date: "Ontem às 20:10" },
-        { id: 4, type: "withdraw", player: "arena_01", value: 1000, date: "Ontem às 19:30" }
-    ],
-    logs: [
-        "Painel carregado com sucesso",
-        "arena_01 entrou online",
-        "soldado_01 entrou online"
-    ]
+    groupName: "Sem Grupo",
+    groupType: "Organização",
+    myRole: "Membro",
+    cashBalance: 0,
+    members: [],
+    cashHistory: [],
+    logs: []
 };
-
-let selectedMemberId = null;
-
-function isOwnerLeader() {
-    return groupData.myRole === "Líder";
-}
-
-function isSubLeaderOrLeader() {
-    return groupData.myRole === "Líder" || groupData.myRole === "Sub-Líder";
-}
-
-function canManageMembers() {
-    return isSubLeaderOrLeader();
-}
-
-function canUseCashWithdraw() {
-    return isSubLeaderOrLeader();
-}
-
-function formatMoney(value) {
-    value = Number(value) || 0;
-    return "R$ " + value.toLocaleString("pt-BR");
-}
 
 function openPage(page, btn) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
 
-    document.getElementById("page-" + page).classList.add("active");
+    document.getElementById(page).classList.add("active");
     btn.classList.add("active");
+}
 
-    const titles = {
-        home: "Página inicial - " + groupData.groupName,
-        members: "Membros - " + groupData.groupName,
-        cash: "Caixa da Org - " + groupData.groupName,
-        logs: "Logs - " + groupData.groupName
-    };
+function money(value) {
+    return "R$ " + Number(value || 0).toLocaleString("pt-BR");
+}
 
-    document.getElementById("pageTitle").innerText = titles[page] || "Painel";
+function isLeader() {
+    return groupData.myRole === "Líder" || groupData.myRole === "Lider";
+}
+
+function canWithdraw() {
+    return groupData.myRole === "Líder" || groupData.myRole === "Lider" || groupData.myRole === "Sub-Líder" || groupData.myRole === "Sub-Lider";
+}
+
+function canManage() {
+    return canWithdraw();
 }
 
 function renderAll() {
-    renderHome();
+    document.getElementById("groupName").innerText = groupData.groupName || "Sem Grupo";
+    document.getElementById("groupType").innerText = groupData.groupType || "Organização";
+    document.getElementById("myRole").innerText = groupData.myRole || "Membro";
+
+    document.getElementById("totalMembers").innerText = groupData.members.length;
+    document.getElementById("onlineMembers").innerText = groupData.members.filter(m => m.online).length;
+    document.getElementById("cashBalance").innerText = money(groupData.cashBalance);
+
+    document.getElementById("leaveBtn").innerText = isLeader() ? "Desfazer grupo" : "Sair do grupo";
+    document.getElementById("withdrawBox").style.display = canWithdraw() ? "block" : "none";
+
     renderMembers();
-    renderCash();
+    renderCashHistory();
     renderLogs();
 }
 
-function renderHome() {
-    const onlineCount = groupData.members.filter(m => m.online).length;
-    const totalCount = groupData.members.length;
-    const btn = document.getElementById("leaveGroupBtn");
-
-    document.getElementById("homeGroupName").innerText = groupData.groupName;
-    document.getElementById("groupTag").innerText = groupData.groupType;
-    document.getElementById("myRoleText").innerText = groupData.myRole;
-    document.getElementById("onlineMembers").innerText = onlineCount;
-    document.getElementById("totalMembers").innerText = totalCount;
-
-    if (isOwnerLeader()) {
-        btn.innerText = "Desfazer grupo";
-        btn.classList.add("danger");
-    } else {
-        btn.innerText = "Sair do grupo";
-        btn.classList.remove("danger");
-    }
-}
-
 function renderMembers() {
-    const list = document.getElementById("membersList");
-    const addBtn = document.getElementById("addMemberBtn");
+    const box = document.getElementById("membersList");
+    box.innerHTML = "";
 
-    list.innerHTML = "";
-
-    if (canManageMembers()) {
-        addBtn.classList.add("show");
-    } else {
-        addBtn.classList.remove("show");
-    }
-
-    if (!groupData.members || groupData.members.length === 0) {
-        list.innerHTML = `<div class="empty">Nenhum membro encontrado.</div>`;
+    if (!groupData.members.length) {
+        box.innerHTML = `<div class="card">Nenhum membro encontrado.</div>`;
         return;
     }
 
     groupData.members.forEach(member => {
-        const row = document.createElement("div");
-        row.className = "member-row";
-
-        const firstLetter = member.name ? member.name.charAt(0).toUpperCase() : "?";
-
-        row.innerHTML = `
-            <div class="member-left">
-                <div class="avatar">${firstLetter}</div>
-                <div class="member-info">
-                    <h3>${member.name}</h3>
-                    <p>${member.role} • ${member.time || "0h"} online</p>
+        box.innerHTML += `
+            <div class="member-item">
+                <div class="avatar">${String(member.name || "?").charAt(0).toUpperCase()}</div>
+                <div>
+                    <div class="member-name">${member.name}</div>
+                    <div class="member-role">${member.role || "Membro"} • ${member.time || "0h"}</div>
                 </div>
-            </div>
-
-            <div class="member-right">
-                <div class="status ${member.online ? "online" : ""}">
-                    <div class="dot"></div>
+                <div class="status ${member.online ? "online" : "offline"}">
                     ${member.online ? "Online" : "Offline"}
                 </div>
-
-                <button class="manage-btn ${canManageMembers() ? "show" : ""}" onclick="openManageModal(${member.id})">
-                    Gerenciar
-                </button>
+                ${
+                    canManage()
+                    ? `<button class="action-btn" onclick="manageMember('${member.name}')">Gerenciar</button>`
+                    : ``
+                }
             </div>
         `;
-
-        list.appendChild(row);
     });
 }
 
-function renderCash() {
-    const balance = document.getElementById("cashBalance");
-    const history = document.getElementById("cashHistory");
-    const withdrawBtn = document.getElementById("withdrawBtn");
-    const cashButtons = document.getElementById("cashButtons");
-    const permissionText = document.getElementById("cashPermissionText");
+function renderCashHistory() {
+    const box = document.getElementById("cashHistory");
+    box.innerHTML = "";
 
-    balance.innerText = formatMoney(groupData.cashBalance);
-    history.innerHTML = "";
-
-    if (canUseCashWithdraw()) {
-        withdrawBtn.style.display = "block";
-        cashButtons.classList.remove("member-only");
-        permissionText.innerText = "Seu cargo permite depositar e sacar dinheiro do caixa.";
-    } else {
-        withdrawBtn.style.display = "none";
-        cashButtons.classList.add("member-only");
-        permissionText.innerText = "Seu cargo permite apenas depositar dinheiro no caixa.";
-    }
-
-    if (!groupData.cashHistory || groupData.cashHistory.length === 0) {
-        history.innerHTML = `<div class="empty">Nenhuma movimentação no caixa.</div>`;
+    if (!groupData.cashHistory.length) {
+        box.innerHTML = `<div class="history-item">Nenhum histórico no caixa.</div>`;
         return;
     }
 
     groupData.cashHistory.forEach(item => {
-        const row = document.createElement("div");
-        row.className = "history-row";
+        const type = item.type === "withdraw" ? "Saque" : "Depósito";
 
-        const isDeposit = item.type === "deposit";
-        const actionName = isDeposit ? "Depósito" : "Saque";
-        const signal = isDeposit ? "+" : "-";
-
-        row.innerHTML = `
-            <div class="history-left">
-                <h3>${actionName} feito por ${item.player}</h3>
-                <p>${item.date}</p>
-            </div>
-
-            <div class="history-value ${isDeposit ? "deposit" : "withdraw"}">
-                ${signal} ${formatMoney(item.value)}
+        box.innerHTML += `
+            <div class="history-item">
+                <strong>${type} - ${money(item.value)}</strong>
+                <span>${item.player || "Desconhecido"} • ${item.date || ""}</span>
             </div>
         `;
-
-        history.appendChild(row);
     });
 }
 
 function renderLogs() {
-    const list = document.getElementById("logsList");
-    list.innerHTML = "";
+    const box = document.getElementById("logsList");
+    box.innerHTML = "";
 
-    if (!groupData.logs || groupData.logs.length === 0) {
-        list.innerHTML = `<div class="empty">Nenhum log encontrado.</div>`;
+    if (!groupData.logs.length) {
+        box.innerHTML = `<div class="log-item">Nenhum log encontrado.</div>`;
         return;
     }
 
     groupData.logs.forEach(log => {
-        const row = document.createElement("div");
-        row.className = "member-row";
-
-        row.innerHTML = `
-            <div class="member-left">
-                <div class="avatar">!</div>
-                <div class="member-info">
-                    <h3>${log}</h3>
-                    <p>Registro do grupo</p>
-                </div>
-            </div>
-        `;
-
-        list.appendChild(row);
+        box.innerHTML += `<div class="log-item">${log}</div>`;
     });
+}
+
+function loadGroupData(data) {
+    groupData = data;
+    renderAll();
+}
+
+function loadGroupDataFromURL() {
+    try {
+        const hash = window.location.hash || "";
+
+        if (!hash.startsWith("#data=")) {
+            renderAll();
+            return;
+        }
+
+        const encoded = hash.substring(6);
+        const decoded = decodeURIComponent(encoded);
+        const json = JSON.parse(decoded);
+
+        loadGroupData(json);
+    } catch (e) {
+        console.log("Erro JSON URL:", e);
+        renderAll();
+    }
+}
+
+function sendToPawn(action, data = {}) {
+    const payload = JSON.stringify({
+        action: action,
+        data: data
+    });
+
+    if (window.cef && window.cef.emit) {
+        window.cef.emit("org_panel", payload);
+        return;
+    }
+
+    if (window.Android && window.Android.onGroupPanel) {
+        window.Android.onGroupPanel(payload);
+        return;
+    }
+
+    if (window.sampCEF && window.sampCEF.send) {
+        window.sampCEF.send("org_panel", payload);
+        return;
+    }
+
+    console.log("CEF SEND:", payload);
 }
 
 function depositCash() {
-    const input = document.getElementById("cashValue");
-    const value = Number(input.value);
+    const value = Number(document.getElementById("depositValue").value || 0);
+    if (value <= 0) return;
 
-    if (!value || value <= 0) {
-        showToast("Erro", "Digite um valor válido.");
-        return;
-    }
-
-    sendToPawn("org_cash_deposit", {
-        value: value
-    });
-
-    input.value = "";
+    sendToPawn("deposit_cash", { value });
 }
 
 function withdrawCash() {
-    const input = document.getElementById("cashValue");
-    const value = Number(input.value);
+    const value = Number(document.getElementById("withdrawValue").value || 0);
+    if (value <= 0) return;
 
-    if (!canUseCashWithdraw()) {
-        showToast("Erro", "Apenas líder ou sub-líder pode sacar.");
-        return;
-    }
-
-    if (!value || value <= 0) {
-        showToast("Erro", "Digite um valor válido.");
-        return;
-    }
-
-    if (value > groupData.cashBalance) {
-        showToast("Erro", "O caixa não tem esse saldo.");
-        return;
-    }
-
-    sendToPawn("org_cash_withdraw", {
-        value: value
-    });
-
-    input.value = "";
+    sendToPawn("withdraw_cash", { value });
 }
 
-function openAddModal() {
-    if (!canManageMembers()) {
-        showToast("Erro", "Você não tem permissão para adicionar membros.");
-        return;
-    }
-
-    document.getElementById("addPlayerInput").value = "";
-    document.getElementById("addRoleInput").value = "Membro";
-    document.getElementById("addModal").classList.add("show");
+function manageMember(name) {
+    sendToPawn("manage_member", { name });
 }
 
-function closeAddModal() {
-    document.getElementById("addModal").classList.remove("show");
-}
-
-function confirmAddMember() {
-    const player = document.getElementById("addPlayerInput").value.trim();
-    const role = document.getElementById("addRoleInput").value;
-
-    if (player.length < 1) {
-        showToast("Erro", "Digite o nome ou ID do jogador.");
-        return;
-    }
-
-    sendToPawn("add_member", {
-        player: player,
-        role: role
-    });
-
-    closeAddModal();
-}
-
-function openManageModal(memberId) {
-    if (!canManageMembers()) {
-        showToast("Erro", "Você não tem permissão para gerenciar membros.");
-        return;
-    }
-
-    const member = groupData.members.find(m => Number(m.id) === Number(memberId));
-    if (!member) return;
-
-    selectedMemberId = memberId;
-
-    document.getElementById("manageName").value = member.name;
-    document.getElementById("manageRole").value = member.role;
-    document.getElementById("manageModal").classList.add("show");
-}
-
-function closeManageModal() {
-    document.getElementById("manageModal").classList.remove("show");
-    selectedMemberId = null;
-}
-
-function saveSelectedMember() {
-    if (selectedMemberId === null) return;
-
-    const member = groupData.members.find(m => Number(m.id) === Number(selectedMemberId));
-    if (!member) return;
-
-    const newRole = document.getElementById("manageRole").value;
-
-    sendToPawn("manage_member", {
-        id: member.id,
-        name: member.name,
-        role: newRole
-    });
-
-    closeManageModal();
-}
-
-function removeSelectedMember() {
-    if (selectedMemberId === null) return;
-
-    const member = groupData.members.find(m => Number(m.id) === Number(selectedMemberId));
-    if (!member) return;
-
-    sendToPawn("remove_member", {
-        id: member.id,
-        name: member.name
-    });
-
-    closeManageModal();
-}
-
-function leaveGroup() {
-    if (isOwnerLeader()) {
-        sendToPawn("delete_group", {});
-        showToast("Sucesso", "Solicitação para desfazer grupo enviada.");
+function leaveOrDelete() {
+    if (isLeader()) {
+        sendToPawn("delete_group");
     } else {
-        sendToPawn("leave_group", {});
-        showToast("Sucesso", "Solicitação para sair do grupo enviada.");
+        sendToPawn("leave_group");
     }
 }
 
 function closePanel() {
-    sendToPawn("close_panel", {});
-    document.getElementById("cefWrapper").style.display = "none";
+    sendToPawn("close_panel");
 }
 
-function showPanel() {
-    document.getElementById("cefWrapper").style.display = "flex";
-}
-
-function showToast(title, msg) {
-    const toast = document.getElementById("toast");
-
-    document.getElementById("toastTitle").innerText = title;
-    document.getElementById("toastMsg").innerText = msg;
-
-    toast.classList.add("show");
-
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 2600);
-}
-
-function sendToPawn(action, data) {
-    const payload = JSON.stringify({
-        action: action,
-        data: data || {}
-    });
-
-    console.log("[CEF->PAWN]", payload);
-
-    if (window.cef && typeof window.cef.emit === "function") {
-        window.cef.emit("group_panel", payload);
-    }
-
-    if (window.Android && typeof window.Android.onGroupPanel === "function") {
-        window.Android.onGroupPanel(payload);
-    }
-
-    if (window.sampCEF && typeof window.sampCEF.send === "function") {
-        window.sampCEF.send("group_panel", payload);
-    }
-}
-
-/*
-    Pawn envia assim:
-
-    Cef_EvalJS(playerid, CEF_ORG, "loadGroupData({\"groupName\":\"Tropa\",\"groupType\":\"Facção\",\"myRole\":\"Líder\",\"cashBalance\":5000,\"members\":[],\"cashHistory\":[],\"logs\":[]});");
-*/
-
-function loadGroupData(json) {
-    try {
-        const data = typeof json === "string" ? JSON.parse(json) : json;
-
-        groupData = {
-            ...groupData,
-            ...data,
-            members: data.members || [],
-            cashHistory: data.cashHistory || [],
-            logs: data.logs || []
-        };
-
-        renderAll();
-        showPanel();
-    } catch (e) {
-        console.log("Erro ao carregar JSON do grupo:", e);
-        showToast("Erro", "Falha ao carregar dados do grupo.");
-    }
-}
-
-function updateCashBalance(value) {
-    groupData.cashBalance = Number(value) || 0;
-    renderAll();
-}
-
-function updateMemberStatus(memberId, online) {
-    const member = groupData.members.find(m => Number(m.id) === Number(memberId));
-    if (!member) return;
-
-    member.online = online;
-    renderAll();
-}
-
-function setMyRole(role) {
-    groupData.myRole = role;
-    renderAll();
-}
-
-renderAll();
+loadGroupDataFromURL();
 </script>
 
 </body>
