@@ -1,364 +1,499 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Painel Grupo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Painel de Grupo</title>
 
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
     font-family: Arial, Helvetica, sans-serif;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: transparent;
-    color: #fff;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#app {
     width: 100vw;
     height: 100vh;
-    background: rgba(5, 8, 18, 0.78);
-    backdrop-filter: blur(8px);
-    display: flex;
-    padding: 18px;
-    gap: 14px;
+    overflow: hidden;
+    background: transparent;
+    color: #d6d6d6;
 }
 
-/* SIDEBAR */
+.cef-wrapper {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.panel {
+    width: 78vw;
+    height: 78vh;
+    min-width: 0;
+    max-width: none;
+    min-height: 0;
+    background: rgba(13, 14, 17, 0.96);
+    border-radius: 16px;
+    display: flex;
+    overflow: hidden;
+    pointer-events: auto;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+}
 
 .sidebar {
     width: 58px;
     height: 100%;
-    background: rgba(15, 23, 42, 0.96);
-    border: 1px solid rgba(148, 163, 184, 0.15);
-    border-radius: 22px;
+    background: rgba(10, 11, 14, 0.88);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 6px;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 15px;
-    background: linear-gradient(135deg, #7c3aed, #a855f7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 13px;
-    margin-bottom: 4px;
-}
-
-.nav {
-    width: 42px;
-    height: 42px;
-    border: none;
-    outline: none;
-    border-radius: 15px;
-    background: rgba(30, 41, 59, 0.95);
-    color: #cbd5e1;
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.nav.active {
-    background: linear-gradient(135deg, #7c3aed, #9333ea);
-    color: #fff;
-    box-shadow: 0 8px 22px rgba(124, 58, 237, 0.35);
-}
-
-.nav.close {
-    margin-top: auto;
-    background: rgba(127, 29, 29, 0.8);
-    color: #fecaca;
-}
-
-/* MAIN */
-
-.main {
-    flex: 1;
-    height: 100%;
-    min-width: 0;
-    background: rgba(15, 23, 42, 0.95);
-    border: 1px solid rgba(148, 163, 184, 0.15);
-    border-radius: 26px;
-    padding: 18px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.topbar {
-    width: 100%;
-    height: 66px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding-top: 16px;
     gap: 14px;
     flex-shrink: 0;
 }
 
-.group-info {
+.nav-btn {
+    width: 38px;
+    height: 38px;
+    border: none;
+    outline: none;
+    border-radius: 11px;
+    background: transparent;
+    color: #777b83;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.nav-btn svg {
+    width: 21px;
+    height: 21px;
+    fill: currentColor;
+}
+
+.nav-btn.active {
+    color: #95a7ff;
+    background: rgba(149, 167, 255, 0.08);
+}
+
+.content {
+    flex: 1;
     min-width: 0;
-}
-
-.group-info h1 {
-    font-size: 25px;
-    line-height: 28px;
-    white-space: nowrap;
+    padding: 18px 24px;
+    position: relative;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.group-info p {
-    margin-top: 4px;
+.topbar {
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.title-area h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #b7b7b7;
+}
+
+.title-line {
+    width: 165px;
+    height: 2px;
+    background: rgba(255,255,255,0.07);
+    margin-top: 7px;
+}
+
+.group-tag {
+    color: #7e7e7e;
     font-size: 13px;
-    color: #94a3b8;
+    margin-top: 3px;
 }
 
-.role-box {
-    padding: 10px 16px;
-    border-radius: 999px;
-    background: rgba(124, 58, 237, 0.2);
-    color: #ddd6fe;
-    border: 1px solid rgba(167, 139, 250, 0.25);
-    font-size: 13px;
-    font-weight: 800;
-    white-space: nowrap;
+.close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #a4a4a4;
+    cursor: pointer;
+    font-size: 18px;
 }
-
-/* PAGES */
 
 .page {
     display: none;
-    height: calc(100% - 66px);
-    min-height: 0;
+    height: calc(100% - 57px);
     overflow: hidden;
 }
 
 .page.active {
-    display: flex;
-    flex-direction: column;
+    display: block;
 }
 
-/* HOME */
-
-.home-grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.home-header {
+    display: flex;
+    align-items: center;
     gap: 14px;
-    margin-top: 12px;
+    margin-bottom: 18px;
+}
+
+.group-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4d5260;
+    flex-shrink: 0;
+}
+
+.group-icon svg {
+    width: 29px;
+    height: 29px;
+    fill: currentColor;
+}
+
+.group-name {
+    font-size: 15px;
+    color: #c9c9c9;
+    font-weight: 600;
+}
+
+.group-role {
+    margin-top: 3px;
+    font-size: 12px;
+    color: #8c8c8c;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 520px;
 }
 
 .stat-card {
-    background: rgba(30, 41, 59, 0.88);
-    border: 1px solid rgba(148, 163, 184, 0.12);
-    border-radius: 20px;
-    padding: 18px;
-    min-height: 120px;
+    min-height: 82px;
+    padding: 15px;
+    background: rgba(255,255,255,0.032);
+    border-radius: 5px;
 }
 
-.stat-card .label {
-    color: #94a3b8;
+.stat-card p {
     font-size: 13px;
+    color: #8f8f8f;
+    font-weight: 600;
     margin-bottom: 10px;
 }
 
-.stat-card .value {
-    font-size: 31px;
-    font-weight: 900;
+.stat-card strong {
+    font-size: 24px;
+    color: #f1f1f1;
 }
 
-.home-actions {
-    margin-top: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-/* BUTTONS */
-
-.btn {
+.leave-btn {
+    margin-top: 16px;
     border: none;
-    outline: none;
-    border-radius: 15px;
-    height: 46px;
-    padding: 0 15px;
-    color: #fff;
-    background: linear-gradient(135deg, #7c3aed, #9333ea);
-    font-weight: 800;
-    font-size: 14px;
-}
-
-.btn.red {
-    background: linear-gradient(135deg, #dc2626, #991b1b);
-}
-
-.btn.gray {
-    background: rgba(51, 65, 85, 0.95);
-}
-
-.btn.small {
-    height: 38px;
+    background: rgba(255,255,255,0.035);
+    color: #999;
     font-size: 12px;
-    border-radius: 12px;
-    padding: 0 12px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-/* MEMBERS */
-
-.page-title {
-    font-size: 18px;
-    font-weight: 900;
-    margin: 10px 0 12px;
+.leave-btn.danger {
+    background: rgba(255, 65, 65, 0.13);
+    color: #ff9b9b;
 }
 
-.members-wrap {
-    flex: 1;
-    min-height: 0;
+.members-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.members-top h2 {
+    font-size: 15px;
+    color: #bdbdbd;
+}
+
+.add-btn {
+    display: none;
+    border: none;
+    background: #8ea0ff;
+    color: #0d0f16;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 9px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.add-btn.show {
+    display: block;
+}
+
+.members-box {
+    height: calc(100% - 46px);
     overflow-y: auto;
-    padding-right: 5px;
+    padding-right: 8px;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
 }
 
-.member-card {
-    width: 100%;
-    background: rgba(30, 41, 59, 0.88);
-    border: 1px solid rgba(148, 163, 184, 0.12);
-    border-radius: 18px;
-    padding: 13px;
-    display: grid;
-    grid-template-columns: 42px 1fr auto auto;
+.members-box::-webkit-scrollbar,
+.cash-history::-webkit-scrollbar {
+    width: 5px;
+}
+
+.members-box::-webkit-scrollbar-thumb,
+.cash-history::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.18);
+    border-radius: 20px;
+}
+
+.member-row {
+    height: 60px;
+    background: rgba(255,255,255,0.032);
+    border-radius: 5px;
+    margin-bottom: 8px;
+    padding: 0 12px;
+    display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.member-left {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
 }
 
 .avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 15px;
-    background: rgba(124, 58, 237, 0.25);
-    border: 1px solid rgba(167, 139, 250, 0.25);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1f2230, #3a3f59);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ddd6fe;
-    font-weight: 900;
+    color: #cfd6ff;
+    font-size: 13px;
+    font-weight: bold;
+    flex-shrink: 0;
 }
 
-.member-name {
-    font-size: 14px;
-    font-weight: 900;
+.member-info {
+    min-width: 0;
+}
+
+.member-info h3 {
+    color: #e0e0e0;
+    font-size: 13px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.member-extra {
-    margin-top: 3px;
-    font-size: 12px;
-    color: #94a3b8;
+.member-info p {
+    margin-top: 4px;
+    color: #858585;
+    font-size: 11px;
 }
 
 .status {
-    height: 30px;
-    padding: 0 12px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 900;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 5px;
+    font-size: 11px;
+    margin-right: 8px;
+    color: #8a8a8a;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #777;
 }
 
 .status.online {
-    background: rgba(22, 101, 52, 0.35);
-    color: #86efac;
+    color: #72e889;
 }
 
-.status.offline {
-    background: rgba(127, 29, 29, 0.35);
-    color: #fca5a5;
+.status.online .dot {
+    background: #72e889;
+    box-shadow: 0 0 8px rgba(114, 232, 137, 0.6);
 }
 
-/* CASH */
+.member-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
 
-.cash-grid {
+.manage-btn {
+    display: none;
+    border: none;
+    background: rgba(255,255,255,0.06);
+    color: #c6c6c6;
+    padding: 7px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.manage-btn.show {
+    display: block;
+}
+
+.empty {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 13px;
+}
+
+.cash-layout {
     height: 100%;
-    min-height: 0;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.cash-card {
+    background: rgba(255,255,255,0.032);
+    border-radius: 5px;
+    padding: 12px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.cash-card h2 {
+    font-size: 14px;
+    color: #cfcfcf;
+    margin-bottom: 10px;
 }
 
 .cash-top {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 230px 1fr;
     gap: 12px;
+    align-items: end;
 }
 
-.cash-card {
-    background: rgba(30, 41, 59, 0.88);
-    border: 1px solid rgba(148, 163, 184, 0.12);
-    border-radius: 20px;
-    padding: 15px;
+.cash-balance {
+    background: rgba(0,0,0,0.22);
+    border-radius: 5px;
+    padding: 12px;
 }
 
-.cash-card h3 {
-    font-size: 15px;
-    margin-bottom: 10px;
+.cash-balance span {
+    display: block;
+    color: #858585;
+    font-size: 12px;
+    margin-bottom: 7px;
 }
 
-.cash-card input {
+.cash-balance strong {
+    color: #8ea0ff;
+    font-size: 22px;
+}
+
+.cash-action-area {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 8px;
+    align-items: end;
+}
+
+.cash-input-box label {
+    display: block;
+    color: #858585;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.cash-input-box input {
     width: 100%;
-    height: 43px;
-    border: none;
+    height: 36px;
+    background: rgba(0,0,0,0.22);
+    border: 1px solid rgba(255,255,255,0.05);
+    color: #e6e6e6;
     outline: none;
-    border-radius: 14px;
-    background: rgba(15, 23, 42, 0.96);
-    color: #fff;
-    padding: 0 13px;
-    font-size: 14px;
-    margin-bottom: 10px;
+    border-radius: 4px;
+    padding: 0 10px;
 }
 
-.cash-history-box {
-    background: rgba(30, 41, 59, 0.88);
-    border: 1px solid rgba(148, 163, 184, 0.12);
-    border-radius: 20px;
-    padding: 14px;
+.cash-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.cash-buttons.member-only {
+    grid-template-columns: 1fr;
+}
+
+.deposit-btn,
+.withdraw-btn {
+    height: 36px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.deposit-btn {
+    background: #8ea0ff;
+    color: #10131d;
+}
+
+.withdraw-btn {
+    background: rgba(255,255,255,0.07);
+    color: #d5d5d5;
+}
+
+.cash-permission {
+    margin-top: 8px;
+    color: #8d8d8d;
+    font-size: 11px;
+}
+
+.history-card {
+    background: rgba(255,255,255,0.032);
+    border-radius: 5px;
+    padding: 12px;
+    flex: 1;
     min-height: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-.cash-history-title {
-    font-size: 15px;
-    font-weight: 900;
+.history-card h2 {
+    font-size: 14px;
+    color: #cfcfcf;
     margin-bottom: 10px;
     flex-shrink: 0;
 }
@@ -367,302 +502,236 @@ body {
     flex: 1;
     min-height: 0;
     overflow-y: auto;
-    padding-right: 5px;
+    padding-right: 8px;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
 }
 
-.history-item {
-    background: rgba(15, 23, 42, 0.95);
-    border: 1px solid rgba(148, 163, 184, 0.1);
-    border-radius: 15px;
-    padding: 12px;
-    margin-bottom: 9px;
-}
-
-.history-top {
+.history-row {
+    min-height: 52px;
+    background: rgba(0,0,0,0.18);
+    border-radius: 5px;
+    margin-bottom: 8px;
+    padding: 8px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
 }
 
-.history-top strong {
-    font-size: 13px;
-}
-
-.history-top span {
-    font-size: 13px;
-    font-weight: 900;
-}
-
-.deposit {
-    color: #86efac;
-}
-
-.withdraw {
-    color: #fca5a5;
-}
-
-.history-bottom {
-    margin-top: 5px;
-    color: #94a3b8;
+.history-left h3 {
+    color: #dedede;
     font-size: 12px;
+    margin-bottom: 4px;
 }
 
-/* LOGS */
-
-.logs-wrap {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    padding-right: 5px;
-    touch-action: pan-y;
-    -webkit-overflow-scrolling: touch;
+.history-left p {
+    color: #838383;
+    font-size: 11px;
 }
 
-.log-item {
-    background: rgba(30, 41, 59, 0.88);
-    border: 1px solid rgba(148, 163, 184, 0.12);
-    border-radius: 16px;
-    padding: 13px;
-    color: #cbd5e1;
-    font-size: 13px;
-    margin-bottom: 9px;
+.history-value {
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
-/* MODAL */
+.history-value.deposit {
+    color: #72e889;
+}
+
+.history-value.withdraw {
+    color: #ff8a8a;
+}
 
 .modal-bg {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0,0,0,0.45);
     display: none;
     align-items: center;
     justify-content: center;
-    z-index: 20;
+    pointer-events: auto;
+    z-index: 9999;
+}
+
+.modal-bg.show {
+    display: flex;
 }
 
 .modal {
-    width: 360px;
-    max-width: calc(100vw - 30px);
-    background: #0f172a;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    border-radius: 22px;
-    padding: 18px;
+    width: 340px;
+    background: #111216;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
 }
 
 .modal h2 {
-    font-size: 19px;
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.modal label {
+    font-size: 12px;
+    color: #838383;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    height: 36px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    outline: none;
+    color: #e9e9e9;
+    border-radius: 5px;
+    padding: 0 10px;
     margin-bottom: 10px;
 }
 
-.modal p {
-    font-size: 13px;
-    color: #94a3b8;
-    margin-bottom: 14px;
+.modal select option {
+    background: #111216;
 }
 
 .modal-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
 }
 
-/* EMPTY */
-
-.empty {
-    background: rgba(30, 41, 59, 0.88);
-    border: 1px dashed rgba(148, 163, 184, 0.22);
-    border-radius: 18px;
-    padding: 18px;
-    text-align: center;
-    color: #94a3b8;
-    font-size: 14px;
+.modal-actions button {
+    border: none;
+    border-radius: 5px;
+    padding: 9px 13px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
 }
 
-/* SCROLL */
-
-::-webkit-scrollbar {
-    width: 5px;
+.cancel {
+    background: rgba(255,255,255,0.06);
+    color: #bdbdbd;
 }
 
-::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.45);
-    border-radius: 20px;
+.confirm {
+    background: #8ea0ff;
+    color: #10131d;
 }
 
-::-webkit-scrollbar-track {
-    background: transparent;
+.danger-btn {
+    background: rgba(255, 65, 65, 0.18);
+    color: #ff8e8e;
 }
 
-/* MOBILE CEF */
+.toast {
+    position: fixed;
+    left: 12px;
+    bottom: 18px;
+    width: 285px;
+    min-height: 62px;
+    background: rgba(20, 22, 27, 0.95);
+    border-radius: 4px;
+    overflow: hidden;
+    display: none;
+    align-items: stretch;
+    pointer-events: none;
+    z-index: 99999;
+}
 
-@media (max-width: 900px) {
-    #app {
-        padding: 8px;
-        gap: 8px;
+.toast.show {
+    display: flex;
+}
+
+.toast-icon {
+    width: 52px;
+    background: #8cff4f;
+    color: #172010;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.toast-text {
+    padding: 11px;
+}
+
+.toast-text h3 {
+    color: #9bff77;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.toast-text p {
+    color: #d4d4d4;
+    font-size: 12px;
+}
+
+@media screen and (max-width: 950px) {
+    .panel {
+        width: 92vw;
+        height: 86vh;
+        border-radius: 12px;
     }
 
     .sidebar {
         width: 50px;
-        border-radius: 18px;
-        padding: 8px 5px;
-        gap: 8px;
+        padding-top: 14px;
+        gap: 12px;
     }
 
-    .logo {
-        width: 38px;
-        height: 38px;
-        font-size: 11px;
-        border-radius: 13px;
-    }
-
-    .nav {
-        width: 38px;
-        height: 38px;
-        border-radius: 13px;
-        font-size: 15px;
-    }
-
-    .main {
-        border-radius: 20px;
-        padding: 11px;
-    }
-
-    .topbar {
-        height: 54px;
-    }
-
-    .group-info h1 {
-        font-size: 18px;
-        line-height: 21px;
-    }
-
-    .group-info p {
-        font-size: 11px;
-    }
-
-    .role-box {
-        padding: 8px 11px;
-        font-size: 11px;
-    }
-
-    .page {
-        height: calc(100% - 54px);
-    }
-
-    .home-grid {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        margin-top: 8px;
-    }
-
-    .stat-card {
-        min-height: 75px;
-        border-radius: 16px;
-        padding: 12px;
-    }
-
-    .stat-card .label {
-        font-size: 11px;
-        margin-bottom: 4px;
-    }
-
-    .stat-card .value {
-        font-size: 22px;
-    }
-
-    .home-actions {
-        gap: 8px;
-    }
-
-    .btn {
-        height: 40px;
-        font-size: 12px;
-        border-radius: 13px;
-    }
-
-    .page-title {
-        font-size: 15px;
-        margin: 8px 0;
-    }
-
-    .member-card {
-        grid-template-columns: 36px 1fr auto;
-        gap: 8px;
-        padding: 10px;
-        border-radius: 15px;
-    }
-
-    .avatar {
+    .nav-btn {
         width: 36px;
         height: 36px;
-        border-radius: 12px;
-        font-size: 13px;
     }
 
-    .member-name {
-        font-size: 12px;
+    .nav-btn svg {
+        width: 20px;
+        height: 20px;
     }
 
-    .member-extra {
-        font-size: 10px;
+    .content {
+        padding: 14px 16px;
     }
 
-    .status {
-        height: 26px;
-        font-size: 10px;
-        padding: 0 8px;
-    }
-
-    .member-card .btn.small {
-        grid-column: 1 / 4;
-        width: 100%;
-        height: 34px;
+    .title-area h1 {
+        font-size: 15px;
     }
 
     .cash-top {
         grid-template-columns: 1fr;
-        gap: 8px;
     }
 
-    .cash-card {
-        padding: 11px;
-        border-radius: 16px;
+    .cash-action-area {
+        grid-template-columns: 1fr 170px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .panel {
+        width: 96vw;
+        height: 90vh;
     }
 
-    .cash-card h3 {
-        font-size: 13px;
-        margin-bottom: 8px;
+    .sidebar {
+        width: 46px;
     }
 
-    .cash-card input {
-        height: 38px;
-        font-size: 12px;
-        border-radius: 12px;
+    .content {
+        padding: 12px;
     }
 
-    .cash-history-box {
-        border-radius: 16px;
-        padding: 11px;
+    .cash-action-area {
+        grid-template-columns: 1fr;
     }
 
-    .history-item {
-        border-radius: 13px;
-        padding: 10px;
-    }
-
-    .history-top strong,
-    .history-top span,
-    .history-bottom {
-        font-size: 11px;
-    }
-
-    .log-item {
-        font-size: 12px;
-        padding: 11px;
-        border-radius: 14px;
+    .status {
+        display: none;
     }
 }
 </style>
@@ -670,142 +739,218 @@ body {
 
 <body>
 
-<div id="app">
-    <aside class="sidebar">
-        <div class="logo">ORG</div>
+<div class="cef-wrapper" id="cefWrapper">
+    <div class="panel">
 
-        <button class="nav active" onclick="changePage('home', this)">🏠</button>
-        <button class="nav" onclick="changePage('members', this)">👥</button>
-        <button class="nav" onclick="changePage('cash', this)">💰</button>
-        <button class="nav" onclick="changePage('logs', this)">📜</button>
+        <div class="sidebar">
+            <button class="nav-btn active" onclick="openPage('home', this)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+            </button>
 
-        <button class="nav close" onclick="closePanel()">✕</button>
-    </aside>
+            <button class="nav-btn" onclick="openPage('members', this)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+            </button>
 
-    <main class="main">
-        <div class="topbar">
-            <div class="group-info">
-                <h1 id="groupName">Carregando...</h1>
-                <p id="groupType">Organização</p>
-            </div>
+            <button class="nav-btn" onclick="openPage('cash', this)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2 3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4zm0 2.2L19 7.3V12c0 4.2-2.7 8.1-7 9.5-4.3-1.4-7-5.3-7-9.5V7.3l7-3.1z"/>
+                    <path d="M13 7h-2v2.1c-1.7.3-3 1.3-3 2.9 0 1.8 1.5 2.5 3.5 3 1.4.4 1.7.7 1.7 1.3 0 .6-.5 1-1.5 1-1.1 0-2.2-.4-3-1.1l-.9 1.8c.8.7 1.9 1.1 3.2 1.3V21h2v-1.8c1.8-.3 3.2-1.3 3.2-3.1 0-1.7-1.1-2.6-3.5-3.2-1.5-.4-1.9-.7-1.9-1.2 0-.5.4-.9 1.4-.9.9 0 1.8.3 2.5.8l.9-1.7c-.6-.5-1.5-.8-2.6-1V7z"/>
+                </svg>
+            </button>
 
-            <div class="role-box" id="myRole">Membro</div>
+            <button class="nav-btn" onclick="openPage('logs', this)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 14H7v-2h10v2zm0-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                </svg>
+            </button>
         </div>
 
-        <section id="page-home" class="page active">
-            <div class="home-grid">
-                <div class="stat-card">
-                    <div class="label">Membros totais</div>
-                    <div class="value" id="totalMembers">0</div>
+        <div class="content">
+            <div class="topbar">
+                <div class="title-area">
+                    <h1 id="pageTitle">Página inicial</h1>
+                    <div class="title-line"></div>
+                    <div class="group-tag" id="groupTag">Facção / Corporação</div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="label">Membros online</div>
-                    <div class="value" id="onlineMembers">0</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="label">Caixa da org</div>
-                    <div class="value" id="cashBalance">R$ 0</div>
-                </div>
+                <button class="close-btn" onclick="closePanel()">×</button>
             </div>
 
-            <div class="home-actions">
-                <button class="btn red" id="leaveDeleteBtn" onclick="leaveOrDeleteGroup()">Sair do grupo</button>
-                <button class="btn gray" onclick="closePanel()">Fechar painel</button>
-            </div>
-        </section>
+            <section class="page active" id="page-home">
+                <div class="home-header">
+                    <div class="group-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3zm0 2.18L18 6.4V11c0 4.4-2.82 8.54-6 9.8-3.18-1.26-6-5.4-6-9.8V6.4l6-2.22z"/>
+                        </svg>
+                    </div>
 
-        <section id="page-members" class="page">
-            <div class="page-title">Membros</div>
-            <div class="members-wrap" id="membersList"></div>
-        </section>
+                    <div>
+                        <div class="group-name" id="homeGroupName">Nenhuma organização</div>
+                        <div class="group-role">Seu cargo: <span id="myRoleText">Membro</span></div>
+                    </div>
+                </div>
 
-        <section id="page-cash" class="page">
-            <div class="page-title">Caixa da Organização</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <p>Membros Online</p>
+                        <strong id="onlineMembers">0</strong>
+                    </div>
 
-            <div class="cash-grid">
-                <div class="cash-top">
+                    <div class="stat-card">
+                        <p>Membros Totais</p>
+                        <strong id="totalMembers">0</strong>
+                    </div>
+                </div>
+
+                <button class="leave-btn" id="leaveGroupBtn" onclick="leaveGroup()">Sair do grupo</button>
+            </section>
+
+            <section class="page" id="page-members">
+                <div class="members-top">
+                    <h2>Membros do grupo</h2>
+                    <button class="add-btn" id="addMemberBtn" onclick="openAddModal()">Adicionar membro</button>
+                </div>
+
+                <div class="members-box" id="membersList"></div>
+            </section>
+
+            <section class="page" id="page-cash">
+                <div class="cash-layout">
                     <div class="cash-card">
-                        <h3>Depositar</h3>
-                        <input type="number" id="depositInput" placeholder="Valor para depositar">
-                        <button class="btn" onclick="depositCash()">Depositar</button>
+                        <h2>Caixa da Org</h2>
+
+                        <div class="cash-top">
+                            <div class="cash-balance">
+                                <span>Saldo disponível</span>
+                                <strong id="cashBalance">R$ 0</strong>
+                            </div>
+
+                            <div>
+                                <div class="cash-action-area">
+                                    <div class="cash-input-box">
+                                        <label>Valor</label>
+                                        <input type="number" id="cashValue" placeholder="Digite o valor">
+                                    </div>
+
+                                    <div class="cash-buttons" id="cashButtons">
+                                        <button class="deposit-btn" onclick="depositCash()">Depositar</button>
+                                        <button class="withdraw-btn" id="withdrawBtn" onclick="withdrawCash()">Sacar</button>
+                                    </div>
+                                </div>
+
+                                <p class="cash-permission" id="cashPermissionText"></p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="cash-card" id="withdrawCard">
-                        <h3>Sacar</h3>
-                        <input type="number" id="withdrawInput" placeholder="Valor para sacar">
-                        <button class="btn red" onclick="withdrawCash()">Sacar</button>
+                    <div class="history-card">
+                        <h2>Histórico de Depósitos e Saques</h2>
+                        <div class="cash-history" id="cashHistory"></div>
                     </div>
                 </div>
+            </section>
 
-                <div class="cash-history-box">
-                    <div class="cash-history-title">Histórico do caixa</div>
-                    <div class="cash-history" id="cashHistory"></div>
+            <section class="page" id="page-logs">
+                <div class="members-top">
+                    <h2>Últimas ações</h2>
                 </div>
-            </div>
-        </section>
 
-        <section id="page-logs" class="page">
-            <div class="page-title">Logs da Organização</div>
-            <div class="logs-wrap" id="logsList"></div>
-        </section>
-    </main>
-</div>
-
-<div class="modal-bg" id="memberModal">
-    <div class="modal">
-        <h2 id="modalTitle">Gerenciar membro</h2>
-        <p id="modalText">Escolha uma ação.</p>
-
-        <div class="modal-actions">
-            <button class="btn gray" onclick="closeMemberModal()">Cancelar</button>
-            <button class="btn red" onclick="removeSelectedMember()">Remover</button>
+                <div class="members-box" id="logsList"></div>
+            </section>
         </div>
     </div>
 </div>
 
-<script>
-let selectedMember = null;
+<div class="modal-bg" id="addModal">
+    <div class="modal">
+        <h2>Adicionar membro</h2>
 
+        <label>ID/Nome do jogador</label>
+        <input type="text" id="addPlayerInput" placeholder="Ex: 24 ou Nome_Sobrenome">
+
+        <label>Cargo</label>
+        <select id="addRoleInput">
+            <option value="Membro">Membro</option>
+            <option value="Gerente">Gerente</option>
+            <option value="Sub-Líder">Sub-Líder</option>
+            <option value="Líder">Líder</option>
+        </select>
+
+        <div class="modal-actions">
+            <button class="cancel" onclick="closeAddModal()">Cancelar</button>
+            <button class="confirm" onclick="confirmAddMember()">Adicionar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-bg" id="manageModal">
+    <div class="modal">
+        <h2>Gerenciar membro</h2>
+
+        <label>Jogador</label>
+        <input type="text" id="manageName" disabled>
+
+        <label>Cargo</label>
+        <select id="manageRole">
+            <option value="Membro">Membro</option>
+            <option value="Gerente">Gerente</option>
+            <option value="Sub-Líder">Sub-Líder</option>
+            <option value="Líder">Líder</option>
+        </select>
+
+        <div class="modal-actions">
+            <button class="danger-btn" onclick="removeSelectedMember()">Remover</button>
+            <button class="cancel" onclick="closeManageModal()">Cancelar</button>
+            <button class="confirm" onclick="saveSelectedMember()">Salvar</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <div class="toast-text">
+        <h3 id="toastTitle">Sucesso</h3>
+        <p id="toastMsg">Ação realizada com sucesso.</p>
+    </div>
+</div>
+
+<script>
 let groupData = {
-    groupName: "Sem Grupo",
-    groupType: "Organização",
-    myRole: "Membro",
-    cashBalance: 0,
-    members: [],
-    cashHistory: [],
-    logs: []
+    groupName: "Tropa do Arena",
+    groupType: "Facção",
+    myRole: "Líder",
+    cashBalance: 15000,
+    members: [
+        { id: 0, name: "arena_01", role: "Líder", online: true, time: "2h" },
+        { id: 1, name: "soldado_01", role: "Sub-Líder", online: true, time: "1h" },
+        { id: 2, name: "membro_01", role: "Membro", online: false, time: "0h" }
+    ],
+    cashHistory: [
+        { id: 0, type: "deposit", player: "arena_01", value: 5000, date: "Hoje às 14:20" },
+        { id: 1, type: "withdraw", player: "arena_01", value: 2000, date: "Hoje às 15:10" },
+        { id: 2, type: "deposit", player: "soldado_01", value: 12000, date: "Ontem às 22:43" },
+        { id: 3, type: "deposit", player: "membro_01", value: 4000, date: "Ontem às 20:10" },
+        { id: 4, type: "withdraw", player: "arena_01", value: 1000, date: "Ontem às 19:30" }
+    ],
+    logs: [
+        "Painel carregado com sucesso",
+        "arena_01 entrou online",
+        "soldado_01 entrou online"
+    ]
 };
 
-function changePage(page, btn) {
-    document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
-    document.querySelectorAll(".nav").forEach(el => el.classList.remove("active"));
+let selectedMemberId = null;
 
-    document.getElementById("page-" + page).classList.add("active");
-    btn.classList.add("active");
-}
-
-function money(value) {
-    value = Number(value || 0);
-    return "R$ " + value.toLocaleString("pt-BR");
-}
-
-function normalizeRole(role) {
-    return String(role || "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase();
-}
-
-function isLeader() {
-    const role = normalizeRole(groupData.myRole);
-    return role === "lider";
+function isOwnerLeader() {
+    return groupData.myRole === "Líder";
 }
 
 function isSubLeaderOrLeader() {
-    const role = normalizeRole(groupData.myRole);
-    return role === "lider" || role === "sub-lider" || role === "sublider";
+    return groupData.myRole === "Líder" || groupData.myRole === "Sub-Líder";
 }
 
 function canManageMembers() {
@@ -816,26 +961,66 @@ function canUseCashWithdraw() {
     return isSubLeaderOrLeader();
 }
 
+function formatMoney(value) {
+    value = Number(value) || 0;
+    return "R$ " + value.toLocaleString("pt-BR");
+}
+
+function openPage(page, btn) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+
+    document.getElementById("page-" + page).classList.add("active");
+    btn.classList.add("active");
+
+    const titles = {
+        home: "Página inicial - " + groupData.groupName,
+        members: "Membros - " + groupData.groupName,
+        cash: "Caixa da Org - " + groupData.groupName,
+        logs: "Logs - " + groupData.groupName
+    };
+
+    document.getElementById("pageTitle").innerText = titles[page] || "Painel";
+}
+
 function renderAll() {
-    document.getElementById("groupName").innerText = groupData.groupName || "Sem Grupo";
-    document.getElementById("groupType").innerText = groupData.groupType || "Organização";
-    document.getElementById("myRole").innerText = groupData.myRole || "Membro";
-
-    document.getElementById("totalMembers").innerText = groupData.members.length;
-    document.getElementById("onlineMembers").innerText = groupData.members.filter(m => m.online).length;
-    document.getElementById("cashBalance").innerText = money(groupData.cashBalance);
-
-    document.getElementById("leaveDeleteBtn").innerText = isLeader() ? "Desfazer grupo" : "Sair do grupo";
-    document.getElementById("withdrawCard").style.display = canUseCashWithdraw() ? "block" : "none";
-
+    renderHome();
     renderMembers();
-    renderCashHistory();
+    renderCash();
     renderLogs();
+}
+
+function renderHome() {
+    const onlineCount = groupData.members.filter(m => m.online).length;
+    const totalCount = groupData.members.length;
+    const btn = document.getElementById("leaveGroupBtn");
+
+    document.getElementById("homeGroupName").innerText = groupData.groupName;
+    document.getElementById("groupTag").innerText = groupData.groupType;
+    document.getElementById("myRoleText").innerText = groupData.myRole;
+    document.getElementById("onlineMembers").innerText = onlineCount;
+    document.getElementById("totalMembers").innerText = totalCount;
+
+    if (isOwnerLeader()) {
+        btn.innerText = "Desfazer grupo";
+        btn.classList.add("danger");
+    } else {
+        btn.innerText = "Sair do grupo";
+        btn.classList.remove("danger");
+    }
 }
 
 function renderMembers() {
     const list = document.getElementById("membersList");
+    const addBtn = document.getElementById("addMemberBtn");
+
     list.innerHTML = "";
+
+    if (canManageMembers()) {
+        addBtn.classList.add("show");
+    } else {
+        addBtn.classList.remove("show");
+    }
 
     if (!groupData.members || groupData.members.length === 0) {
         list.innerHTML = `<div class="empty">Nenhum membro encontrado.</div>`;
@@ -843,91 +1028,331 @@ function renderMembers() {
     }
 
     groupData.members.forEach(member => {
-        const name = member.name || "Desconhecido";
-        const role = member.role || "Membro";
-        const time = member.time || "0h";
-        const online = !!member.online;
+        const row = document.createElement("div");
+        row.className = "member-row";
 
-        const firstLetter = name.substring(0, 1).toUpperCase();
+        const firstLetter = member.name ? member.name.charAt(0).toUpperCase() : "?";
 
-        list.innerHTML += `
-            <div class="member-card">
+        row.innerHTML = `
+            <div class="member-left">
                 <div class="avatar">${firstLetter}</div>
+                <div class="member-info">
+                    <h3>${member.name}</h3>
+                    <p>${member.role} • ${member.time || "0h"} online</p>
+                </div>
+            </div>
 
-                <div>
-                    <div class="member-name">${escapeHTML(name)}</div>
-                    <div class="member-extra">${escapeHTML(role)} • ${escapeHTML(time)}</div>
+            <div class="member-right">
+                <div class="status ${member.online ? "online" : ""}">
+                    <div class="dot"></div>
+                    ${member.online ? "Online" : "Offline"}
                 </div>
 
-                <div class="status ${online ? "online" : "offline"}">
-                    ${online ? "Online" : "Offline"}
-                </div>
-
-                ${
-                    canManageMembers()
-                    ? `<button class="btn small" onclick="openMemberModal('${escapeAttr(name)}')">Gerenciar</button>`
-                    : ``
-                }
+                <button class="manage-btn ${canManageMembers() ? "show" : ""}" onclick="openManageModal(${member.id})">
+                    Gerenciar
+                </button>
             </div>
         `;
+
+        list.appendChild(row);
     });
 }
 
-function renderCashHistory() {
-    const box = document.getElementById("cashHistory");
-    box.innerHTML = "";
+function renderCash() {
+    const balance = document.getElementById("cashBalance");
+    const history = document.getElementById("cashHistory");
+    const withdrawBtn = document.getElementById("withdrawBtn");
+    const cashButtons = document.getElementById("cashButtons");
+    const permissionText = document.getElementById("cashPermissionText");
+
+    balance.innerText = formatMoney(groupData.cashBalance);
+    history.innerHTML = "";
+
+    if (canUseCashWithdraw()) {
+        withdrawBtn.style.display = "block";
+        cashButtons.classList.remove("member-only");
+        permissionText.innerText = "Seu cargo permite depositar e sacar dinheiro do caixa.";
+    } else {
+        withdrawBtn.style.display = "none";
+        cashButtons.classList.add("member-only");
+        permissionText.innerText = "Seu cargo permite apenas depositar dinheiro no caixa.";
+    }
 
     if (!groupData.cashHistory || groupData.cashHistory.length === 0) {
-        box.innerHTML = `<div class="empty">Nenhum histórico encontrado.</div>`;
+        history.innerHTML = `<div class="empty">Nenhuma movimentação no caixa.</div>`;
         return;
     }
 
     groupData.cashHistory.forEach(item => {
-        const type = item.type === "withdraw" ? "Saque" : "Depósito";
-        const cls = item.type === "withdraw" ? "withdraw" : "deposit";
-        const player = item.player || "Desconhecido";
-        const date = item.date || "";
+        const row = document.createElement("div");
+        row.className = "history-row";
 
-        box.innerHTML += `
-            <div class="history-item">
-                <div class="history-top">
-                    <strong>${type}</strong>
-                    <span class="${cls}">${money(item.value)}</span>
-                </div>
+        const isDeposit = item.type === "deposit";
+        const actionName = isDeposit ? "Depósito" : "Saque";
+        const signal = isDeposit ? "+" : "-";
 
-                <div class="history-bottom">
-                    ${escapeHTML(player)} • ${escapeHTML(date)}
-                </div>
+        row.innerHTML = `
+            <div class="history-left">
+                <h3>${actionName} feito por ${item.player}</h3>
+                <p>${item.date}</p>
+            </div>
+
+            <div class="history-value ${isDeposit ? "deposit" : "withdraw"}">
+                ${signal} ${formatMoney(item.value)}
             </div>
         `;
+
+        history.appendChild(row);
     });
 }
 
 function renderLogs() {
-    const box = document.getElementById("logsList");
-    box.innerHTML = "";
+    const list = document.getElementById("logsList");
+    list.innerHTML = "";
 
     if (!groupData.logs || groupData.logs.length === 0) {
-        box.innerHTML = `<div class="empty">Nenhum log encontrado.</div>`;
+        list.innerHTML = `<div class="empty">Nenhum log encontrado.</div>`;
         return;
     }
 
     groupData.logs.forEach(log => {
-        box.innerHTML += `<div class="log-item">${escapeHTML(log)}</div>`;
+        const row = document.createElement("div");
+        row.className = "member-row";
+
+        row.innerHTML = `
+            <div class="member-left">
+                <div class="avatar">!</div>
+                <div class="member-info">
+                    <h3>${log}</h3>
+                    <p>Registro do grupo</p>
+                </div>
+            </div>
+        `;
+
+        list.appendChild(row);
     });
 }
 
-function loadGroupData(data) {
-    groupData = {
-        groupName: data.groupName || "Sem Grupo",
-        groupType: data.groupType || "Organização",
-        myRole: data.myRole || "Membro",
-        cashBalance: Number(data.cashBalance || 0),
-        members: Array.isArray(data.members) ? data.members : [],
-        cashHistory: Array.isArray(data.cashHistory) ? data.cashHistory : [],
-        logs: Array.isArray(data.logs) ? data.logs : []
-    };
+function depositCash() {
+    const input = document.getElementById("cashValue");
+    const value = Number(input.value);
 
+    if (!value || value <= 0) {
+        showToast("Erro", "Digite um valor válido.");
+        return;
+    }
+
+    sendToPawn("org_cash_deposit", {
+        value: value
+    });
+
+    input.value = "";
+}
+
+function withdrawCash() {
+    const input = document.getElementById("cashValue");
+    const value = Number(input.value);
+
+    if (!canUseCashWithdraw()) {
+        showToast("Erro", "Apenas líder ou sub-líder pode sacar.");
+        return;
+    }
+
+    if (!value || value <= 0) {
+        showToast("Erro", "Digite um valor válido.");
+        return;
+    }
+
+    if (value > groupData.cashBalance) {
+        showToast("Erro", "O caixa não tem esse saldo.");
+        return;
+    }
+
+    sendToPawn("org_cash_withdraw", {
+        value: value
+    });
+
+    input.value = "";
+}
+
+function openAddModal() {
+    if (!canManageMembers()) {
+        showToast("Erro", "Você não tem permissão para adicionar membros.");
+        return;
+    }
+
+    document.getElementById("addPlayerInput").value = "";
+    document.getElementById("addRoleInput").value = "Membro";
+    document.getElementById("addModal").classList.add("show");
+}
+
+function closeAddModal() {
+    document.getElementById("addModal").classList.remove("show");
+}
+
+function confirmAddMember() {
+    const player = document.getElementById("addPlayerInput").value.trim();
+    const role = document.getElementById("addRoleInput").value;
+
+    if (player.length < 1) {
+        showToast("Erro", "Digite o nome ou ID do jogador.");
+        return;
+    }
+
+    sendToPawn("add_member", {
+        player: player,
+        role: role
+    });
+
+    closeAddModal();
+}
+
+function openManageModal(memberId) {
+    if (!canManageMembers()) {
+        showToast("Erro", "Você não tem permissão para gerenciar membros.");
+        return;
+    }
+
+    const member = groupData.members.find(m => Number(m.id) === Number(memberId));
+    if (!member) return;
+
+    selectedMemberId = memberId;
+
+    document.getElementById("manageName").value = member.name;
+    document.getElementById("manageRole").value = member.role;
+    document.getElementById("manageModal").classList.add("show");
+}
+
+function closeManageModal() {
+    document.getElementById("manageModal").classList.remove("show");
+    selectedMemberId = null;
+}
+
+function saveSelectedMember() {
+    if (selectedMemberId === null) return;
+
+    const member = groupData.members.find(m => Number(m.id) === Number(selectedMemberId));
+    if (!member) return;
+
+    const newRole = document.getElementById("manageRole").value;
+
+    sendToPawn("manage_member", {
+        id: member.id,
+        name: member.name,
+        role: newRole
+    });
+
+    closeManageModal();
+}
+
+function removeSelectedMember() {
+    if (selectedMemberId === null) return;
+
+    const member = groupData.members.find(m => Number(m.id) === Number(selectedMemberId));
+    if (!member) return;
+
+    sendToPawn("remove_member", {
+        id: member.id,
+        name: member.name
+    });
+
+    closeManageModal();
+}
+
+function leaveGroup() {
+    if (isOwnerLeader()) {
+        sendToPawn("delete_group", {});
+        showToast("Sucesso", "Solicitação para desfazer grupo enviada.");
+    } else {
+        sendToPawn("leave_group", {});
+        showToast("Sucesso", "Solicitação para sair do grupo enviada.");
+    }
+}
+
+function closePanel() {
+    sendToPawn("close_panel", {});
+    document.getElementById("cefWrapper").style.display = "none";
+}
+
+function showPanel() {
+    document.getElementById("cefWrapper").style.display = "flex";
+}
+
+function showToast(title, msg) {
+    const toast = document.getElementById("toast");
+
+    document.getElementById("toastTitle").innerText = title;
+    document.getElementById("toastMsg").innerText = msg;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2600);
+}
+
+function sendToPawn(action, data) {
+    const payload = JSON.stringify({
+        action: action,
+        data: data || {}
+    });
+
+    console.log("[CEF->PAWN]", payload);
+
+    if (window.cef && typeof window.cef.emit === "function") {
+        window.cef.emit("group_panel", payload);
+    }
+
+    if (window.Android && typeof window.Android.onGroupPanel === "function") {
+        window.Android.onGroupPanel(payload);
+    }
+
+    if (window.sampCEF && typeof window.sampCEF.send === "function") {
+        window.sampCEF.send("group_panel", payload);
+    }
+}
+
+/*
+    Pawn envia assim:
+
+    Cef_EvalJS(playerid, CEF_ORG, "loadGroupData({\"groupName\":\"Tropa\",\"groupType\":\"Facção\",\"myRole\":\"Líder\",\"cashBalance\":5000,\"members\":[],\"cashHistory\":[],\"logs\":[]});");
+*/
+
+function loadGroupData(json) {
+    try {
+        const data = typeof json === "string" ? JSON.parse(json) : json;
+
+        groupData = {
+            ...groupData,
+            ...data,
+            members: data.members || [],
+            cashHistory: data.cashHistory || [],
+            logs: data.logs || []
+        };
+
+        renderAll();
+        showPanel();
+    } catch (e) {
+        console.log("Erro ao carregar JSON do grupo:", e);
+        showToast("Erro", "Falha ao carregar dados do grupo.");
+    }
+}
+
+function updateCashBalance(value) {
+    groupData.cashBalance = Number(value) || 0;
+    renderAll();
+}
+
+function updateMemberStatus(memberId, online) {
+    const member = groupData.members.find(m => Number(m.id) === Number(memberId));
+    if (!member) return;
+
+    member.online = online;
+    renderAll();
+}
+
+function setMyRole(role) {
+    groupData.myRole = role;
     renderAll();
 }
 
@@ -936,7 +1361,9 @@ function loadGroupDataFromURL() {
         const hash = window.location.hash || "";
 
         if (!hash.startsWith("#data=")) {
-            renderAll();
+            if (typeof renderAll === "function") {
+                renderAll();
+            }
             return;
         }
 
@@ -944,117 +1371,21 @@ function loadGroupDataFromURL() {
         const decoded = decodeURIComponent(encoded);
         const json = JSON.parse(decoded);
 
-        loadGroupData(json);
+        if (typeof loadGroupData === "function") {
+            loadGroupData(json);
+        } else {
+            console.log("Funcao loadGroupData nao existe no HTML.");
+        }
+
     } catch (e) {
         console.log("Erro ao carregar JSON da URL:", e);
-        renderAll();
+
+        if (typeof renderAll === "function") {
+            renderAll();
+        }
     }
 }
-
-function sendToPawn(action, data = {}) {
-    const payload = JSON.stringify({
-        action: action,
-        data: data
-    });
-
-    if (window.cef && window.cef.emit) {
-        window.cef.emit("org_panel", payload);
-        return;
-    }
-
-    if (window.Android && window.Android.onGroupPanel) {
-        window.Android.onGroupPanel(payload);
-        return;
-    }
-
-    if (window.sampCEF && window.sampCEF.send) {
-        window.sampCEF.send("org_panel", payload);
-        return;
-    }
-
-    console.log("CEF SEND:", payload);
-}
-
-function depositCash() {
-    const input = document.getElementById("depositInput");
-    const value = Number(input.value || 0);
-
-    if (value <= 0) return;
-
-    sendToPawn("deposit_cash", {
-        value: value
-    });
-
-    input.value = "";
-}
-
-function withdrawCash() {
-    const input = document.getElementById("withdrawInput");
-    const value = Number(input.value || 0);
-
-    if (value <= 0) return;
-
-    sendToPawn("withdraw_cash", {
-        value: value
-    });
-
-    input.value = "";
-}
-
-function openMemberModal(name) {
-    selectedMember = name;
-
-    document.getElementById("modalTitle").innerText = "Gerenciar membro";
-    document.getElementById("modalText").innerText = "Membro selecionado: " + name;
-    document.getElementById("memberModal").style.display = "flex";
-}
-
-function closeMemberModal() {
-    selectedMember = null;
-    document.getElementById("memberModal").style.display = "none";
-}
-
-function removeSelectedMember() {
-    if (!selectedMember) return;
-
-    sendToPawn("remove_member", {
-        name: selectedMember
-    });
-
-    closeMemberModal();
-}
-
-function leaveOrDeleteGroup() {
-    if (isLeader()) {
-        sendToPawn("delete_group");
-    } else {
-        sendToPawn("leave_group");
-    }
-}
-
-function closePanel() {
-    sendToPawn("close_panel");
-}
-
-function escapeHTML(text) {
-    return String(text || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-function escapeAttr(text) {
-    return String(text || "")
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'")
-        .replace(/"/g, "&quot;");
-}
-
-window.loadGroupData = loadGroupData;
-
-loadGroupDataFromURL();
+renderAll();
 </script>
 
 </body>
