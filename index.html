@@ -945,12 +945,20 @@ let groupData = {
 
 let selectedMemberId = null;
 
+function normalizeRole(role) {
+    return String(role || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
+
 function isOwnerLeader() {
-    return groupData.myRole === "Líder";
+    return normalizeRole(groupData.myRole) === "lider";
 }
 
 function isSubLeaderOrLeader() {
-    return groupData.myRole === "Líder" || groupData.myRole === "Sub-Líder";
+    const role = normalizeRole(groupData.myRole);
+    return role === "lider" || role === "sub-lider" || role === "sublider";
 }
 
 function canManageMembers() {
@@ -1035,10 +1043,10 @@ function renderMembers() {
 
         row.innerHTML = `
             <div class="member-left">
-                <div class="avatar">${firstLetter}</div>
+                <div class="avatar">${escapeHTML(firstLetter)}</div>
                 <div class="member-info">
-                    <h3>${member.name}</h3>
-                    <p>${member.role} • ${member.time || "0h"} online</p>
+                    <h3>${escapeHTML(member.name)}</h3>
+                    <p>${escapeHTML(member.role)} • ${escapeHTML(member.time || "0h")} online</p>
                 </div>
             </div>
 
@@ -1048,7 +1056,7 @@ function renderMembers() {
                     ${member.online ? "Online" : "Offline"}
                 </div>
 
-                <button class="manage-btn ${canManageMembers() ? "show" : ""}" onclick="openManageModal(${member.id})">
+                <button class="manage-btn ${canManageMembers() ? "show" : ""}" onclick="openManageModal(${Number(member.id)})">
                     Gerenciar
                 </button>
             </div>
@@ -1093,8 +1101,8 @@ function renderCash() {
 
         row.innerHTML = `
             <div class="history-left">
-                <h3>${actionName} feito por ${item.player}</h3>
-                <p>${item.date}</p>
+                <h3>${actionName} feito por ${escapeHTML(item.player)}</h3>
+                <p>${escapeHTML(item.date)}</p>
             </div>
 
             <div class="history-value ${isDeposit ? "deposit" : "withdraw"}">
@@ -1123,7 +1131,7 @@ function renderLogs() {
             <div class="member-left">
                 <div class="avatar">!</div>
                 <div class="member-info">
-                    <h3>${log}</h3>
+                    <h3>${escapeHTML(log)}</h3>
                     <p>Registro do grupo</p>
                 </div>
             </div>
@@ -1312,12 +1320,6 @@ function sendToPawn(action, data) {
     }
 }
 
-/*
-    Pawn envia assim:
-
-    Cef_EvalJS(playerid, CEF_ORG, "loadGroupData({\"groupName\":\"Tropa\",\"groupType\":\"Facção\",\"myRole\":\"Líder\",\"cashBalance\":5000,\"members\":[],\"cashHistory\":[],\"logs\":[]});");
-*/
-
 function loadGroupData(json) {
     try {
         const data = typeof json === "string" ? JSON.parse(json) : json;
@@ -1335,6 +1337,27 @@ function loadGroupData(json) {
     } catch (e) {
         console.log("Erro ao carregar JSON do grupo:", e);
         showToast("Erro", "Falha ao carregar dados do grupo.");
+    }
+}
+
+function loadGroupDataFromURL() {
+    try {
+        const hash = window.location.hash || "";
+
+        if (!hash.startsWith("#data=")) {
+            renderAll();
+            return;
+        }
+
+        const encoded = hash.substring(6);
+        const decoded = decodeURIComponent(encoded);
+        const json = JSON.parse(decoded);
+
+        loadGroupData(json);
+    } catch (e) {
+        console.log("Erro ao carregar JSON da URL:", e);
+        showToast("Erro", "Falha ao carregar JSON da URL.");
+        renderAll();
     }
 }
 
@@ -1356,36 +1379,19 @@ function setMyRole(role) {
     renderAll();
 }
 
-function loadGroupDataFromURL() {
-    try {
-        const hash = window.location.hash || "";
-
-        if (!hash.startsWith("#data=")) {
-            if (typeof renderAll === "function") {
-                renderAll();
-            }
-            return;
-        }
-
-        const encoded = hash.substring(6);
-        const decoded = decodeURIComponent(encoded);
-        const json = JSON.parse(decoded);
-
-        if (typeof loadGroupData === "function") {
-            loadGroupData(json);
-        } else {
-            console.log("Funcao loadGroupData nao existe no HTML.");
-        }
-
-    } catch (e) {
-        console.log("Erro ao carregar JSON da URL:", e);
-
-        if (typeof renderAll === "function") {
-            renderAll();
-        }
-    }
+function escapeHTML(text) {
+    return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
-renderAll();
+
+window.loadGroupData = loadGroupData;
+window.loadGroupDataFromURL = loadGroupDataFromURL;
+
+loadGroupDataFromURL();
 </script>
 
 </body>
