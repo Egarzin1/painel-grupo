@@ -920,27 +920,13 @@ body {
 
 <script>
 let groupData = {
-    groupName: "Tropa do Arena",
-    groupType: "Facção",
-    myRole: "Líder",
-    cashBalance: 15000,
-    members: [
-        { id: 0, name: "arena_01", role: "Líder", online: true, time: "2h" },
-        { id: 1, name: "soldado_01", role: "Sub-Líder", online: true, time: "1h" },
-        { id: 2, name: "membro_01", role: "Membro", online: false, time: "0h" }
-    ],
-    cashHistory: [
-        { id: 0, type: "deposit", player: "arena_01", value: 5000, date: "Hoje às 14:20" },
-        { id: 1, type: "withdraw", player: "arena_01", value: 2000, date: "Hoje às 15:10" },
-        { id: 2, type: "deposit", player: "soldado_01", value: 12000, date: "Ontem às 22:43" },
-        { id: 3, type: "deposit", player: "membro_01", value: 4000, date: "Ontem às 20:10" },
-        { id: 4, type: "withdraw", player: "arena_01", value: 1000, date: "Ontem às 19:30" }
-    ],
-    logs: [
-        "Painel carregado com sucesso",
-        "arena_01 entrou online",
-        "soldado_01 entrou online"
-    ]
+    groupName: "Nenhuma organização",
+    groupType: "Facção / Corporação",
+    myRole: "Membro",
+    cashBalance: 0,
+    members: [],
+    cashHistory: [],
+    logs: []
 };
 
 let selectedMemberId = null;
