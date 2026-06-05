@@ -400,18 +400,14 @@ const etapas = [
     "corpo"
 ];
 
+const MAX_CABELOS = 5;
+const MAX_CORES_CABELO = 4;
+const MAX_CORES_CORPO = 4;
+    
 const rostosMasculinos = [
     {
         id: 0,
         img: "https://cdn.discordapp.com/attachments/1311003199649484952/1511825681896575078/Face-0.png?ex=6a21dce2&is=6a208b62&hm=9b8b9d7cc77385f2fabeaf127c5f493744b42cd81d706aacac327b4ccc227010&"
-    },
-    {
-        id: 1,
-        img: "https://media.discordapp.net/attachments/1311003199649484952/1511825682341040168/Face-2.png?ex=6a21dce3&is=6a208b63&hm=2b07a185429b3ff047d057939afda87131f33f5ca70e1ec4a3f72bb4c5345b57&=&format=webp&quality=lossless&width=184&height=184"
-    },
-    {
-        id: 2,
-        img: "https://media.discordapp.net/attachments/1311003199649484952/1511825681254977716/Face-1.png?ex=6a21dce2&is=6a208b62&hm=7edb34d4d85548174be976bf9e804f659cb074764199666d82c103d9af2dd8e5&=&format=webp&quality=lossless&width=184&height=184"
     }
 ];
 
@@ -589,6 +585,10 @@ function mudarCabelo(valor) {
         cabeloSelecionado = 0;
     }
 
+    if (cabeloSelecionado > MAX_CABELOS) {
+        cabeloSelecionado = MAX_CABELOS;
+    }
+
     emitir("custom_cabelo", String(cabeloSelecionado));
 }
 
@@ -599,6 +599,10 @@ function mudarCorCabelo(valor) {
         corCabelo = 0;
     }
 
+    if (corCabelo > MAX_CORES_CABELO) {
+        corCabelo = MAX_CORES_CABELO;
+    }
+
     emitir("custom_cor_cabelo", String(corCabelo));
 }
 
@@ -607,6 +611,10 @@ function mudarCorCorpo(valor) {
 
     if (corCorpo < 0) {
         corCorpo = 0;
+    }
+
+    if (corCorpo > MAX_CORES_CORPO) {
+        corCorpo = MAX_CORES_CORPO;
     }
 
     emitir("custom_cor_corpo", String(corCorpo));
