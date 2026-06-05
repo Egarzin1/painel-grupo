@@ -440,17 +440,22 @@ const rostosFemininos = [
     eventType = 1
     payload = "custom_genero|Masculino"
 */
-function emitir(evento, dados) {
-    const payload = evento + "|" + String(dados);
+function emitir(eventName, value) {
+    const payload = eventName + "|" + value;
 
-    console.log("[CUSTOM EVENT]", payload);
+    console.log("[CUSTOM SEND]", payload);
 
-    if (typeof Android !== "undefined" && Android.sendEvent) {
-        Android.sendEvent(BROWSER_ID, EVENT_TYPE, payload);
+    if (window.Android && window.Android.sendEvent) {
+        window.Android.sendEvent(50, 1, payload);
         return;
     }
 
-    console.log("[CUSTOM EVENT] Android.sendEvent nao existe:", payload);
+    if (window.CefBrowser && window.CefBrowser.sendEvent) {
+        window.CefBrowser.sendEvent(50, 1, payload);
+        return;
+    }
+
+    console.log("[CUSTOM] Nenhum bridge encontrado:", payload);
 }
 
 function carregarRostos() {
