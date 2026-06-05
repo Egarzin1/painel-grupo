@@ -25,9 +25,15 @@ body {
     position: absolute;
     right: 20px;
     top: 50%;
-    transform: translateY(-50%);
+
+    /* Mantido igual ao antigo */
     width: 345px;
     height: 410px;
+
+    /* Só diminui a escala pra não ficar gigante */
+    transform: translateY(-50%) scale(0.78);
+    transform-origin: right center;
+
     background: #292c31;
     border-radius: 5px;
     overflow: hidden;
@@ -233,7 +239,8 @@ body {
     position: absolute;
     left: 50%;
     bottom: 58px;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(0.78);
+    transform-origin: center bottom;
     display: flex;
     gap: 28px;
 }
@@ -247,6 +254,28 @@ body {
     font-size: 22px;
     line-height: 23px;
     text-align: center;
+}
+
+/* Se ainda ficar grande no mobile */
+@media (max-width: 900px) {
+    #custom-box {
+        right: 10px;
+        transform: translateY(-50%) scale(0.70);
+    }
+
+    .rotate-area {
+        transform: translateX(-50%) scale(0.70);
+    }
+}
+
+@media (max-height: 520px) {
+    #custom-box {
+        transform: translateY(-50%) scale(0.66);
+    }
+
+    .rotate-area {
+        transform: translateX(-50%) scale(0.66);
+    }
 }
 </style>
 </head>
@@ -361,19 +390,15 @@ let cabeloSelecionado = 0;
 let corCabelo = 0;
 let corCorpo = 0;
 
+const BROWSER_ID = 50;
+const EVENT_TYPE = 1;
+
 const etapas = [
     "identidade",
     "aparencia",
     "cabelo",
     "corpo"
 ];
-
-/*
-    ADICIONE QUANTOS ROSTOS QUISER AQUI.
-
-    Se tiver até 3 rostos, fica centralizado.
-    Se tiver 4 ou mais, fica com rolagem horizontal.
-*/
 
 const rostosMasculinos = [
     {
@@ -388,13 +413,6 @@ const rostosMasculinos = [
         id: 2,
         img: "https://media.discordapp.net/attachments/1311003199649484952/1511825681254977716/Face-1.png?ex=6a21dce2&is=6a208b62&hm=7edb34d4d85548174be976bf9e804f659cb074764199666d82c103d9af2dd8e5&=&format=webp&quality=lossless&width=184&height=184"
     }
-
-    // Exemplo para adicionar mais:
-    // ,
-    // {
-    //     id: 3,
-    //     img: "rostos/masculino/face3.png"
-    // }
 ];
 
 const rostosFemininos = [
@@ -410,25 +428,29 @@ const rostosFemininos = [
         id: 2,
         img: "rostos/feminino/face2.png"
     }
-
-    // Exemplo para adicionar mais:
-    // ,
-    // {
-    //     id: 3,
-    //     img: "rostos/feminino/face3.png"
-    // }
 ];
 
+/*
+    PADRÃO ATUAL DO SEU CEF:
+
+    Android.sendEvent(browserId, eventType, payload)
+
+    Vai chegar no C++ assim:
+    browserId = 50
+    eventType = 1
+    payload = "custom_genero|Masculino"
+*/
 function emitir(evento, dados) {
-    if (typeof cef !== "undefined") {
-        cef.emit(evento, dados);
+    const payload = evento + "|" + String(dados);
+
+    console.log("[CUSTOM EVENT]", payload);
+
+    if (typeof Android !== "undefined" && Android.sendEvent) {
+        Android.sendEvent(BROWSER_ID, EVENT_TYPE, payload);
+        return;
     }
 
-    if (typeof sampcef !== "undefined") {
-        sampcef.emit(evento, dados);
-    }
-
-    console.log(evento, dados);
+    console.log("[CUSTOM EVENT] Android.sendEvent nao existe:", payload);
 }
 
 function carregarRostos() {
@@ -444,13 +466,15 @@ function carregarRostos() {
         return;
     }
 
-    rostoSelecionado = rostos[0].id;
+    if (rostoSelecionado < 0) {
+        rostoSelecionado = rostos[0].id;
+    }
 
     for (let i = 0; i < rostos.length; i++) {
         let item = document.createElement("div");
         item.className = "face";
 
-        if (i === 0) {
+        if (rostos[i].id === rostoSelecionado) {
             item.classList.add("selected");
         }
 
@@ -466,8 +490,6 @@ function carregarRostos() {
     if (rostos.length > 3) {
         lista.classList.add("muitos-rostos");
     }
-
-    emitir("custom:rosto", String(rostoSelecionado));
 }
 
 function abrirEtapa(index) {
@@ -492,7 +514,7 @@ function abrirEtapa(index) {
         document.getElementById("bottom-btn").innerHTML = "Proximo &gt;&gt;";
     }
 
-    emitir("custom:aba", nome);
+    emitir("custom_aba", nome);
 }
 
 function proximo() {
@@ -512,6 +534,7 @@ function clicarAba(index) {
 
 function selecionarGenero(genero) {
     generoSelecionado = genero;
+    rostoSelecionado = 0;
 
     document.getElementById("gender-m").classList.remove("active");
     document.getElementById("gender-f").classList.remove("active");
@@ -532,7 +555,7 @@ function selecionarGenero(genero) {
 
     carregarRostos();
 
-    emitir("custom:genero", genero);
+    emitir("custom_genero", genero);
 }
 
 function selecionarRosto(id) {
@@ -551,7 +574,7 @@ function selecionarRosto(id) {
         }
     }
 
-    emitir("custom:rosto", String(id));
+    emitir("custom_rosto", String(id));
 }
 
 function mudarCabelo(valor) {
@@ -561,7 +584,7 @@ function mudarCabelo(valor) {
         cabeloSelecionado = 0;
     }
 
-    emitir("custom:cabelo", String(cabeloSelecionado));
+    emitir("custom_cabelo", String(cabeloSelecionado));
 }
 
 function mudarCorCabelo(valor) {
@@ -571,7 +594,7 @@ function mudarCorCabelo(valor) {
         corCabelo = 0;
     }
 
-    emitir("custom:cor_cabelo", String(corCabelo));
+    emitir("custom_cor_cabelo", String(corCabelo));
 }
 
 function mudarCorCorpo(valor) {
@@ -581,15 +604,15 @@ function mudarCorCorpo(valor) {
         corCorpo = 0;
     }
 
-    emitir("custom:cor_corpo", String(corCorpo));
+    emitir("custom_cor_corpo", String(corCorpo));
 }
 
 function girarEsquerda() {
-    emitir("custom:girar", "left");
+    emitir("custom_girar", "left");
 }
 
 function girarDireita() {
-    emitir("custom:girar", "right");
+    emitir("custom_girar", "right");
 }
 
 function finalizarCustom() {
@@ -601,7 +624,7 @@ function finalizarCustom() {
         corCorpo: corCorpo
     };
 
-    emitir("custom:finalizar", JSON.stringify(dados));
+    emitir("custom_finalizar", JSON.stringify(dados));
 }
 
 carregarRostos();
