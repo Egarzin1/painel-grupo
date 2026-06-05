@@ -357,6 +357,13 @@ body {
             <span>Escolha a cor do seu cabelo</span>
             <span class="arrow" onclick="mudarCorCabelo(1)">&gt;&gt;</span>
         </div>
+        <div class="label">BARBA</div>
+        
+        <div class="option-row">
+            <span class="arrow" onclick="mudarBarba(-1)">&lt;&lt;</span>
+            <span>Escolha seu estilo de barba</span>
+            <span class="arrow" onclick="mudarBarba(1)">&gt;&gt;</span>
+        </div>
     </div>
 
     <!-- CORPO -->
@@ -389,7 +396,8 @@ let rostoSelecionado = 0;
 let cabeloSelecionado = 0;
 let corCabelo = 0;
 let corCorpo = 0;
-
+let barbaSelecionada = 0;
+    
 const BROWSER_ID = 50;
 const EVENT_TYPE = 1;
 
@@ -403,6 +411,7 @@ const etapas = [
 const MAX_CABELOS = 4;
 const MAX_CORES_CABELO = 4;
 const MAX_CORES_CORPO = 4;
+const MAX_BARBAS = 4;
     
 const rostosMasculinos = [
     {
@@ -619,7 +628,21 @@ function mudarCorCorpo(valor) {
 
     emitir("custom_cor_corpo", String(corCorpo));
 }
+    
+function mudarBarba(valor) {
+    barbaSelecionada += valor;
 
+    if (barbaSelecionada < 0) {
+        barbaSelecionada = 0;
+    }
+
+    if (barbaSelecionada > MAX_BARBAS) {
+        barbaSelecionada = MAX_BARBAS;
+    }
+
+    emitir("custom_barba", String(barbaSelecionada));
+}
+    
 function girarEsquerda() {
     emitir("custom_girar", "left");
 }
@@ -634,7 +657,8 @@ function finalizarCustom() {
         rosto: rostoSelecionado,
         cabelo: cabeloSelecionado,
         corCabelo: corCabelo,
-        corCorpo: corCorpo
+        corCorpo: corCorpo,
+        barba: barbaSelecionada
     };
 
     emitir("custom_finalizar", JSON.stringify(dados));
